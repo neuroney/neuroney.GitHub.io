@@ -141,7 +141,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-27 00:17:15" itemprop="dateModified" datetime="2022-03-27T00:17:15+08:00">2022-03-27</time>
+      <time title="Modified: 2022-03-27 01:02:47" itemprop="dateModified" datetime="2022-03-27T01:02:47+08:00">2022-03-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -193,7 +193,8 @@ class="math inline">\(\mathbb{Z}_p^*=\{1,2,\cdots,p-1\}\)</span>，该群有如�
 <ol type="1">
 <li>该群是循环群（cyclic group），即存在生成元（generator）<span
 class="math inline">\(g\)</span>，使得 <span
-class="math inline">\(\mathbb{Z}_p^*=\{g^0,g^1,\cdots,g^{n-2}\}\)</span>。</li>
+class="math inline">\(\mathbb{Z}_p^*=\{g^0,g^1,\)</span> <span
+class="math inline">\(\cdots,g^{n-2}\}\)</span>。</li>
 <li>基于离散对数问题（discrete logarithm problem）保证即使知道 <span
 class="math inline">\(h\)</span>，很难找到 <span
 class="math inline">\(a\)</span> 使得 <span
@@ -256,43 +257,45 @@ class="math inline">\(E(1),E(s),\cdots,E(s^d)\)</span> 中也无法恢复出
 assumption 保证。</p>
 <p>下面的章节会介绍 blind evaluation 是如何在 SNARKs
 中使用的。粗略地讲，验证者（verifier）需要检查自己的多项式是否被证明者（prover）知道，基于
-Schwartz-Zippel 定理 “不同多项式再大多数点的值都不同”。</p>
+Schwartz-Zippel 定理 “不同多项式在大多数点的值都不同”。</p>
 <h3 id="the-knowledge-of-coefficient-test-and-assumption">The Knowledge
 of Coefficient Test and Assumption</h3>
-<p>For <span class="math inline">\(\alpha \in \mathbb{F}_p^*\)</span>,
-let us call a pair <span class="math inline">\((a,b)\)</span> in <span
-class="math inline">\(G\)</span> an <span
-class="math inline">\(\alpha-\)</span>pair if <span
-class="math inline">\(a,b\neq0\)</span> and <span
-class="math inline">\(b=\alpha\cdot a\)</span>.</p>
-<p>The <em>KC Test</em> proceeds as follows:</p>
+<p>上一节的内容只保证 Alice 能够计算 <span
+class="math inline">\(E(P(s))\)</span> 但无法强制要求 Alice 向 Bob 发送
+<span class="math inline">\(E(P(s))\)</span>。本节介绍的 Knowledge of
+Coefficient (KC) Test 是满足“强制性”方法的一个基本工具。</p>
+<p>基于离散对数问题，构建一个价（order）为 <span
+class="math inline">\(p\)</span>，生成元（generator）为 <span
+class="math inline">\(g\)</span> 的群 <span
+class="math inline">\(G\)</span>。对 <span class="math inline">\(\alpha
+\in \mathbb{Z}_p^*\)</span>，定义 <span
+class="math inline">\(\alpha\)</span>-pair 为 <span
+class="math inline">\((a,b)\)</span> ，其中 <span
+class="math inline">\(a,b\neq0, b=\alpha\cdot a,a,b\in G\)</span>。</p>
+<p><em>KC Test</em> 的流程如下：</p>
 <ol type="1">
-<li>Bob chooses random <span class="math inline">\(\alpha \in
-F_p^*\)</span> and <span class="math inline">\(a \in G\)</span>. He
-computes <span class="math inline">\(b=\alpha\cdot a\)</span>.</li>
-<li>He sends to Alice the "challenge" pair <span
-class="math inline">\((a,b)\)</span>. (<span
-class="math inline">\(\alpha-\)</span>pair)</li>
-<li>Alice must now respond with a different pair <span
-class="math inline">\((a&#39;,b&#39;)\)</span> that is also an <span
-class="math inline">\(\alpha-\)</span>pair.</li>
-<li>Bob accepts Alice's response only if <span
-class="math inline">\((a&#39;,b&#39;)\)</span> is indeed an <span
-class="math inline">\(\alpha-\)</span>pair. (As he knows <span
-class="math inline">\(\alpha\)</span> he can check if <span
-class="math inline">\(b&#39;=\alpha\cdot a&#39;\)</span>.)</li>
+<li>Bob 随机选择 <span class="math inline">\(\alpha \in F_p^*\)</span>
+和 <span class="math inline">\(a \in G\)</span> 并计算 <span
+class="math inline">\(b=\alpha\cdot a\)</span>。</li>
+<li>Bob 发送 <span class="math inline">\((a,b)\)</span> 给 Alice。</li>
+<li>Alice 必须回复 <span class="math inline">\((a&#39;,b&#39;)\)</span>
+同样也是 <span class="math inline">\(\alpha-\)</span>pair 给 Bob。</li>
+<li>Bob 检查 <span class="math inline">\((a&#39;,b&#39;)\)</span> 是否是
+<span class="math inline">\(\alpha-\)</span>pair（<span
+class="math inline">\(b&#39;=\alpha\cdot a&#39;\)</span>）。</li>
 </ol>
-<p>Without knowing <span class="math inline">\(\alpha\)</span>, Alice
-can send <span class="math inline">\((a&#39;,b&#39;)=(\gamma\cdot
-a,\gamma\cdot b)\)</span> for some <span class="math inline">\(\gamma
-\in \mathbb{F}_p^*\)</span>, which is the coefficient.</p>
-<p>The Knowledge of Coefficient Assumption (KCA): If Alice returns a
-valid response <span class="math inline">\((a&#39;,b&#39;)\)</span> to
-Bob's challenge <span class="math inline">\((a,b)\)</span> with
-non-negligible probability over Bob's choices of <span
-class="math inline">\(a,\alpha\)</span> then she knows <span
-class="math inline">\(\gamma\)</span> such that <span
-class="math inline">\(a&#39;=\gamma \cdot a\)</span>.</p>
+<p>在不知道 <span class="math inline">\(\alpha\)</span>
+的情况下，Alice可以选择一些 <span class="math inline">\(\gamma \in
+\mathbb{F}_p^*\)</span> 构造 <span
+class="math inline">\((a&#39;,b&#39;)=(\gamma\cdot a,\gamma\cdot
+b)\)</span>，这样的 <span class="math inline">\((a&#39;,b&#39;)\)</span>
+是满足 <span class="math inline">\(\alpha-\)</span>pair 的。</p>
+<p>The Knowledge of Coefficient Assumption (KCA): 如果 Alice 对 Bob
+的挑战 <span class="math inline">\((a,b)\)</span> 回复 <span
+class="math inline">\((a&#39;,b&#39;)\)</span> 是 <span
+class="math inline">\(\alpha\)</span>-pair 的概率是不可忽略的，那么
+Alice 知道满足 <span class="math inline">\(a&#39;=\gamma \cdot
+a\)</span> 的 <span class="math inline">\(\gamma\)</span>。</p>
 <h3 id="verifiable-blind-evaluation-of-polynomials">Verifiable Blind
 Evaluation of Polynomials</h3>
 <p>Blindness: Alice will not learn <span
