@@ -22,14 +22,14 @@
 
 
 
-<link rel="canonical" href="https://neuroney.github.io/woaini/">
+<link rel="canonical" href="https://neuroney.github.io/SNARKs%20Explainer%20in%20Zcash/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://neuroney.github.io/woaini/","path":"woaini/","title":"woaini"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://neuroney.github.io/SNARKs%20Explainer%20in%20Zcash/","path":"SNARKs Explainer in Zcash/","title":"SNARKs Explainer in Zcash"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>woaini | Neptune</title>
+<title>SNARKs Explainer in Zcash | Neptune</title>
   
 
 
@@ -105,7 +105,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://neuroney.github.io/woaini/">
+    <link itemprop="mainEntityOfPage" href="https://neuroney.github.io/SNARKs%20Explainer%20in%20Zcash/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -118,12 +118,12 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="woaini | Neptune">
+      <meta itemprop="name" content="SNARKs Explainer in Zcash | Neptune">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          woaini
+          SNARKs Explainer in Zcash
         </h1>
 
         <div class="post-meta-container">
@@ -141,7 +141,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-26 20:42:49" itemprop="dateModified" datetime="2022-03-26T20:42:49+08:00">2022-03-26</time>
+      <time title="Modified: 2022-03-27 00:17:15" itemprop="dateModified" datetime="2022-03-27T00:17:15+08:00">2022-03-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -149,7 +149,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%88%91%E7%88%B1%E4%BD%A0/" itemprop="url" rel="index"><span itemprop="name">我爱你</span></a>
+          <a href="/categories/Cryptography/" itemprop="url" rel="index"><span itemprop="name">Cryptography</span></a>
         </span>
     </span>
 
@@ -163,53 +163,100 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="homomorphic-hiding-hh">Homomorphic Hiding (HH)</h3>
-<p>A homomorphic hiding function <span
-class="math inline">\(E(x)\)</span> has the following properties:</p>
+        <p>本篇文章是阅读 Zcash 关于 SNARK的 <a
+target="_blank" rel="noopener" href="https://z.cash/technology/zksnarks">技术文档</a>做的一些记录。</p>
+<p>Succinct Non-interactive Argument of
+Knowledge（SNARK）是一种对特定信息的证明结构。</p>
+<h3 id="homomorphic-hiding">Homomorphic Hiding</h3>
+<p>Homomorphic Hiding（HH）是构造 zk-SNARKs 最重要的一环。对数据 <span
+class="math inline">\(x\)</span> 的 HH 函数 <span
+class="math inline">\(E(x)\)</span> 需要满足如下性质：</p>
 <ul>
-<li>For most <span class="math inline">\(x\)</span>, given <span
-class="math inline">\(E(x)\)</span> is hard to find <span
-class="math inline">\(x\)</span></li>
-<li>Different inputs lead to different outputs – so if <span
-class="math inline">\(x\neq y\)</span>, then <span
-class="math inline">\(E(x)\neq E(y)\)</span>.</li>
-<li>If someone knows <span class="math inline">\(E(x)\)</span> and <span
-class="math inline">\(E(y)\)</span>, they can generate the HH of
-arithmetic expressions in <span class="math inline">\(x\)</span> and
-<span class="math inline">\(y\)</span>. For example, they can compute
-<span class="math inline">\(E(x+y)\)</span> from <span
-class="math inline">\(E(x)\)</span> and <span
-class="math inline">\(E(y)\)</span>.</li>
+<li>对<strong>大多数</strong> <span class="math inline">\(x\)</span>
+而言，知道 <span class="math inline">\(E(x)\)</span> 计算出 <span
+class="math inline">\(x\)</span> 是困难的。</li>
+<li>不同的输入会对应不同的输出，即如果 <span class="math inline">\(x\neq
+y\)</span>，那么 <span class="math inline">\(E(x)\neq
+E(y)\)</span>.</li>
+<li>如果知道 <span class="math inline">\(E(x), E(y)\)</span>, 可以计算出
+<span class="math inline">\(x,y\)</span> 算术表达式的
+HH。在加法的情况下，我们可以从 <span class="math inline">\(E(x),
+E(y)\)</span> 计算出 <span class="math inline">\(E(x+y)\)</span>
+而不需要知道 <span class="math inline">\(x,y\)</span> 的值。</li>
 </ul>
-<p>HH is useful for Zero-knowledge proofs.</p>
-<p>Construction for HH: finite groups <span
-class="math inline">\(\mathbb{Z}_p^*\)</span>, discrete logarithm
-problem</p>
-<p><span class="math inline">\(\mathbb{F}_p\)</span>, the set <span
-class="math inline">\(\{0,1,\cdots,p-1\}\)</span> and <span
-class="math inline">\(+,\times\)</span> are done <span
-class="math inline">\(\mod p\)</span>.</p>
-<p>HH is used in snarks to hide verifier challenges rather than prover
-secrets.</p>
 <span id="more"></span>
+<p>HH 对于零知识证明（Zero-knowledge
+proofs）十分有效。简单的做法，可以选取一个有限群（finite
+groups）来构造。</p>
+<p>对于一个素数 <span class="math inline">\(p\)</span>，选取群 <span
+class="math inline">\(\mathbb{Z}_p^*=\{1,2,\cdots,p-1\}\)</span>，该群有如下性质：</p>
+<ol type="1">
+<li>该群是循环群（cyclic group），即存在生成元（generator）<span
+class="math inline">\(g\)</span>，使得 <span
+class="math inline">\(\mathbb{Z}_p^*=\{g^0,g^1,\cdots,g^{n-2}\}\)</span>。</li>
+<li>基于离散对数问题（discrete logarithm problem）保证即使知道 <span
+class="math inline">\(h\)</span>，很难找到 <span
+class="math inline">\(a\)</span> 使得 <span
+class="math inline">\(g^a=h(\mod p)\)</span>。</li>
+<li><span class="math inline">\(\forall a,b\in\{0,\cdots,p-2\},g^a \cdot
+g^b =g^{a+b(\mod p-1)}\)</span>。</li>
+</ol>
+<p>在该群中，就可以定义一个简单的同态隐藏函数 <span
+class="math inline">\(E(X)=g^x\)</span>。</p>
+<p>HH 并不是密码学中正式定义的术语，在这里作为例子使用。它是相似概念
+computationally hiding commitment 的弱化版本。HH 是一个确定性函数，但
+commitment 是一个概率性算法。HH
+只要求隐藏<strong>大多数</strong>输入，而 commitment
+要求隐藏<strong>全部</strong>的输入。</p>
 <h3 id="blind-evaluation-of-polynomials">Blind Evaluation of
 Polynomials</h3>
-<p>The polynomial <span class="math inline">\(P: P(X)=a_0+a_1\cdot
-X+a_2\cdot X^2+\cdots+a_d\cdot X^d\)</span> for some <span
-class="math inline">\(a_0,\cdots,a_d\in \mathbb{F}_p\)</span>.</p>
-<p>Evaluate <span class="math inline">\(P\)</span> at a point <span
-class="math inline">\(s\in \mathbb{F}_p\)</span>: computing the
-resultant sum <span class="math inline">\(P(s)=a_0+a_1\cdot s+a_2\cdot
-s^2+\cdots+a_d\cdot s^d\)</span> .</p>
-<p>HH supports this linear combinations by <span
-class="math inline">\(E(ax+by)=E(x)^a+E(y)^b\)</span>.</p>
-<p>Alice wants Bob to learn <span class="math inline">\(E(P(s))\)</span>
-without learning <span class="math inline">\(P\)</span>. And Bob doesn't
-want Alice to learn <span class="math inline">\(s\)</span>.</p>
-<p>Thus, Bob send to Alice the hidings <span
-class="math inline">\(E(1),E(s),\cdots,E(s^d)\)</span>. Alice computes
-<span class="math inline">\(E(P(s))\)</span> by linear combination and
-sends it to Bob. (d-power Diffie-Hellman assumption)</p>
+<p>记 <span
+class="math inline">\(\mathbb{F}_{p}=\{0,\cdots,p-1\}\)</span>，其中加法和乘法分别模
+<span class="math inline">\(p\)</span>。</p>
+<p><span class="math inline">\(\mathbb{F}_{p}\)</span> 上的多项式 <span
+class="math inline">\(P: P(X)=a_0+a_1\cdot X+a_2\cdot
+X^2+\cdots+a_d\cdot X^d\)</span> 其中 <span
+class="math inline">\(a_0,\cdots,a_d\in \mathbb{F}_p\)</span>。</p>
+<p>在 <span class="math inline">\(s, s\in \mathbb{F}_p\)</span> 上对
+<span class="math inline">\(P\)</span> 的评估：计算 <span
+class="math inline">\(P(s)=a_0+a_1\cdot s+a_2\cdot s^2+\cdots+a_d\cdot
+s^d\)</span> 。</p>
+<p>如果我们知道 <span class="math inline">\(P\)</span> 的话，那么 <span
+class="math inline">\(P(s)\)</span> 其实是 <span
+class="math inline">\(1,s,\cdots,s^d\)</span>
+的线性组合。在上一小节中，定义 <span
+class="math inline">\(E(x)=g^x\)</span>，那么我们可以推导出 HH
+的线性关系： <span
+class="math inline">\(E(ax+by)=E(x)^a+E(y)^b\)</span>。</p>
+<p>假设 Alice 拥有多项式 <span class="math inline">\(P\)</span>，度为
+<span class="math inline">\(d\)</span>。Bob 随机选择 <span
+class="math inline">\(s, s\in \mathbb{F}_p\)</span>。</p>
+<p>Blind Evaluation of Polynomials 要求在通信过程中，Bob 知道 <span
+class="math inline">\(E(P(s))\)</span> 但不知道 <span
+class="math inline">\(P\)</span>。Alice 计算 <span
+class="math inline">\(E(P(s))\)</span> 并发送给 Bob 但不知道 <span
+class="math inline">\(s\)</span>。</p>
+<p>通过 HH，构建如下的通信过程：</p>
+<ol type="1">
+<li>Bob 发送给 Alice，<span
+class="math inline">\(E(1),E(s),\cdots,E(s^d)\)</span>。</li>
+<li>Alice 通过接受到的元素，通过线性组合计算出 <span
+class="math inline">\(E(P(s))\)</span> 发送给 Bob。</li>
+</ol>
+<p>这样， Blind Evaluation of Polynomials 就完成了，既没有泄露 <span
+class="math inline">\(s\)</span> 也没有泄露 <span
+class="math inline">\(P\)</span>。</p>
+<p>在 Zcash
+中，所构造的多项式太长，以及不同的信息所产生的多项式各不相同，所以传递多项式并不是
+succinct 的做法。事实上隐藏性只保证了从 <span
+class="math inline">\(E(s)\)</span> 无法恢复出 <span
+class="math inline">\(s\)</span>，在这里我们需要申明从 <span
+class="math inline">\(E(1),E(s),\cdots,E(s^d)\)</span> 中也无法恢复出
+<span class="math inline">\(s\)</span>，这里由 d-power Diffie-Hellman
+assumption 保证。</p>
+<p>下面的章节会介绍 blind evaluation 是如何在 SNARKs
+中使用的。粗略地讲，验证者（verifier）需要检查自己的多项式是否被证明者（prover）知道，基于
+Schwartz-Zippel 定理 “不同多项式再大多数点的值都不同”。</p>
 <h3 id="the-knowledge-of-coefficient-test-and-assumption">The Knowledge
 of Coefficient Test and Assumption</h3>
 <p>For <span class="math inline">\(\alpha \in \mathbb{F}_p^*\)</span>,
@@ -371,6 +418,15 @@ class="math inline">\(L,R,O,P\)</span> of degree at most $d$899
 
         
 
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%BD%AD%E6%98%8E%E8%BE%89%E6%95%99%E6%8E%88%E7%A0%94%E7%A9%B6%E7%94%9F%E6%89%8B%E5%86%8C/" rel="next" title="彭明辉教授研究生手册">
+                  彭明辉教授研究生手册 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
