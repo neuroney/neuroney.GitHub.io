@@ -64,7 +64,7 @@ The foregoing KCA achieves the blindness, now we need an extended version of KCA
 
 Suppose Alice wants to prove to Bob she knows $c_1,c_2,c_3\in \mathbb{F}_p$ such that $(c_1\cdot c_2)\cdot (c_1+c_3)=7$. The first step is to present the expression computed from $c_1,c_2,c_3$ as an arithmetic circuit.
 
-<img src="woaini/CircuitDrawing-1.png" alt="img" style="zoom:60%;" />
+<img src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/CircuitDrawing-1.png" alt="img" style="zoom:60%;" />
 
 - When the same outgoing wire goes into more than one gate, we still think of it as one wire – like $w_1$ in the example.
 - We assume multiplication gates have exactly two input wires, which we call the left wire and right wire.
