@@ -141,7 +141,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-27 01:02:47" itemprop="dateModified" datetime="2022-03-27T01:02:47+08:00">2022-03-27</time>
+      <time title="Modified: 2022-03-27 17:19:03" itemprop="dateModified" datetime="2022-03-27T17:19:03+08:00">2022-03-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -167,10 +167,10 @@
 target="_blank" rel="noopener" href="https://z.cash/technology/zksnarks">技术文档</a>做的一些记录。</p>
 <p>Succinct Non-interactive Argument of
 Knowledge（SNARK）是一种对特定信息的证明结构。</p>
-<h3 id="homomorphic-hiding">Homomorphic Hiding</h3>
-<p>Homomorphic Hiding（HH）是构造 zk-SNARKs 最重要的一环。对数据 <span
-class="math inline">\(x\)</span> 的 HH 函数 <span
-class="math inline">\(E(x)\)</span> 需要满足如下性质：</p>
+<h2 id="一同态隐藏">一、同态隐藏</h2>
+<p>同态隐藏（Homomorphic Hiding，HH）是构造 zk-SNARKs
+最重要的一环。对数据 <span class="math inline">\(x\)</span> 的 HH 函数
+<span class="math inline">\(E(x)\)</span> 需要满足如下性质：</p>
 <ul>
 <li>对<strong>大多数</strong> <span class="math inline">\(x\)</span>
 而言，知道 <span class="math inline">\(E(x)\)</span> 计算出 <span
@@ -209,11 +209,11 @@ computationally hiding commitment 的弱化版本。HH 是一个确定性函数�
 commitment 是一个概率性算法。HH
 只要求隐藏<strong>大多数</strong>输入，而 commitment
 要求隐藏<strong>全部</strong>的输入。</p>
-<h3 id="blind-evaluation-of-polynomials">Blind Evaluation of
-Polynomials</h3>
+<h2 id="二多项式的盲评估">二、多项式的盲评估</h2>
 <p>记 <span
 class="math inline">\(\mathbb{F}_{p}=\{0,\cdots,p-1\}\)</span>，其中加法和乘法分别模
 <span class="math inline">\(p\)</span>。</p>
+<h3 id="多项式和线性组合">多项式和线性组合</h3>
 <p><span class="math inline">\(\mathbb{F}_{p}\)</span> 上的多项式 <span
 class="math inline">\(P: P(X)=a_0+a_1\cdot X+a_2\cdot
 X^2+\cdots+a_d\cdot X^d\)</span> 其中 <span
@@ -229,10 +229,12 @@ class="math inline">\(1,s,\cdots,s^d\)</span>
 class="math inline">\(E(x)=g^x\)</span>，那么我们可以推导出 HH
 的线性关系： <span
 class="math inline">\(E(ax+by)=E(x)^a+E(y)^b\)</span>。</p>
+<h3 id="多项式的盲评估">多项式的盲评估</h3>
 <p>假设 Alice 拥有多项式 <span class="math inline">\(P\)</span>，度为
 <span class="math inline">\(d\)</span>。Bob 随机选择 <span
 class="math inline">\(s, s\in \mathbb{F}_p\)</span>。</p>
-<p>Blind Evaluation of Polynomials 要求在通信过程中，Bob 知道 <span
+<p>多项式的盲评估（Blind Evaluation of
+Polynomials）要求在通信过程中，Bob 知道 <span
 class="math inline">\(E(P(s))\)</span> 但不知道 <span
 class="math inline">\(P\)</span>。Alice 计算 <span
 class="math inline">\(E(P(s))\)</span> 并发送给 Bob 但不知道 <span
@@ -244,7 +246,7 @@ class="math inline">\(E(1),E(s),\cdots,E(s^d)\)</span>。</li>
 <li>Alice 通过接受到的元素，通过线性组合计算出 <span
 class="math inline">\(E(P(s))\)</span> 发送给 Bob。</li>
 </ol>
-<p>这样， Blind Evaluation of Polynomials 就完成了，既没有泄露 <span
+<p>这样，多项式的盲评估就完成了，既没有泄露 <span
 class="math inline">\(s\)</span> 也没有泄露 <span
 class="math inline">\(P\)</span>。</p>
 <p>在 Zcash
@@ -255,16 +257,16 @@ class="math inline">\(s\)</span>，在这里我们需要申明从 <span
 class="math inline">\(E(1),E(s),\cdots,E(s^d)\)</span> 中也无法恢复出
 <span class="math inline">\(s\)</span>，这里由 d-power Diffie-Hellman
 assumption 保证。</p>
-<p>下面的章节会介绍 blind evaluation 是如何在 SNARKs
+<p>下面的章节会介绍盲评估是如何在 SNARKs
 中使用的。粗略地讲，验证者（verifier）需要检查自己的多项式是否被证明者（prover）知道，基于
 Schwartz-Zippel 定理 “不同多项式在大多数点的值都不同”。</p>
-<h3 id="the-knowledge-of-coefficient-test-and-assumption">The Knowledge
-of Coefficient Test and Assumption</h3>
+<h2 id="三知识系数测试和假设">三、知识系数测试和假设</h2>
 <p>上一节的内容只保证 Alice 能够计算 <span
 class="math inline">\(E(P(s))\)</span> 但无法强制要求 Alice 向 Bob 发送
-<span class="math inline">\(E(P(s))\)</span>。本节介绍的 Knowledge of
-Coefficient (KC) Test 是满足“强制性”方法的一个基本工具。</p>
-<p>基于离散对数问题，构建一个价（order）为 <span
+<span
+class="math inline">\(E(P(s))\)</span>。本节介绍的知识系数测试（Knowledge
+of Coefficient (KC) Test）是满足“强制性”方法的一个基本工具。</p>
+<p>基于离散对数问题，构建一个阶（order）为 <span
 class="math inline">\(p\)</span>，生成元（generator）为 <span
 class="math inline">\(g\)</span> 的群 <span
 class="math inline">\(G\)</span>。对 <span class="math inline">\(\alpha
@@ -290,126 +292,415 @@ class="math inline">\(b&#39;=\alpha\cdot a&#39;\)</span>）。</li>
 class="math inline">\((a&#39;,b&#39;)=(\gamma\cdot a,\gamma\cdot
 b)\)</span>，这样的 <span class="math inline">\((a&#39;,b&#39;)\)</span>
 是满足 <span class="math inline">\(\alpha-\)</span>pair 的。</p>
-<p>The Knowledge of Coefficient Assumption (KCA): 如果 Alice 对 Bob
-的挑战 <span class="math inline">\((a,b)\)</span> 回复 <span
+<p>知识系数假设（ Knowledge of Coefficient Assumption，KCA）：如果 Alice
+对 Bob 的挑战 <span class="math inline">\((a,b)\)</span> 回复 <span
 class="math inline">\((a&#39;,b&#39;)\)</span> 是 <span
 class="math inline">\(\alpha\)</span>-pair 的概率是不可忽略的，那么
 Alice 知道满足 <span class="math inline">\(a&#39;=\gamma \cdot
 a\)</span> 的 <span class="math inline">\(\gamma\)</span>。</p>
-<h3 id="verifiable-blind-evaluation-of-polynomials">Verifiable Blind
-Evaluation of Polynomials</h3>
-<p>Blindness: Alice will not learn <span
-class="math inline">\(s\)</span> and Bob will not learn <span
-class="math inline">\(P\)</span>.</p>
-<p>Verifiability: The probability that Alice sends a value not <span
-class="math inline">\(E(P(s))\)</span> for <span
-class="math inline">\(P\)</span> of degree <span
-class="math inline">\(d\)</span> but Bob still accepts – is
-negligible.</p>
-<p>The foregoing KCA achieves the blindness, now we need an extended
-version of KCA .</p>
-<p><strong>d-KCA</strong>: Suppose Bob chooses random <span
-class="math inline">\(\alpha \in \mathbb{F}_p^*\)</span> and <span
-class="math inline">\(s\in \mathbb{F}_p\)</span>, and sends to Alice the
-<span class="math inline">\(\alpha-\)</span>pairs <span
-class="math inline">\((g,\alpha\cdot g),(s\cdot g,\alpha s\cdot
-g),\cdots,(s^d\cdot g,\alpha s^d\cdot g)\)</span>. Suppose that Alice
-then outputs another <span class="math inline">\(\alpha-\)</span>pair
-<span class="math inline">\((a&#39;,b&#39;)\)</span>. Then, except with
-negligible probability, Alice knows <span
-class="math inline">\(c_0,\cdots,c_d\in\mathbb{F}_p\)</span> such that
-<span class="math inline">\(\sum_{i=0}^d c_i s^i \cdot
-g=a&#39;\)</span>.</p>
-<h3 id="from-computations-to-polynomials">From Computations to
-Polynomials</h3>
-<p>Suppose Alice wants to prove to Bob she knows <span
-class="math inline">\(c_1,c_2,c_3\in \mathbb{F}_p\)</span> such that
-<span class="math inline">\((c_1\cdot c_2)\cdot (c_1+c_3)=7\)</span>.
-The first step is to present the expression computed from <span
-class="math inline">\(c_1,c_2,c_3\)</span> as an arithmetic circuit.</p>
-<p><img data-src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/CircuitDrawing-1.png" alt="img" style="zoom:60%;" /></p>
-<ul>
-<li>When the same outgoing wire goes into more than one gate, we still
-think of it as one wire – like <span class="math inline">\(w_1\)</span>
-in the example.</li>
-<li>We assume multiplication gates have exactly two input wires, which
-we call the left wire and right wire.</li>
-<li>We don't label the wires going from an addition to multiplication
-gate, nor the addition gate; we think of the inputs of the addition gate
-as going directly into the multiplication gate. So in the example we
-think of <span class="math inline">\(w_1\)</span> and <span
-class="math inline">\(w_3\)</span> as both being right inputs of <span
-class="math inline">\(g_2\)</span>.</li>
-</ul>
-<p>A legal assignment for the circuit is an assignment of values to the
-labeled wires where the output value of each multiplication gate.</p>
-<p>For example, a legal assignment is of the form: <span
-class="math inline">\((c_1,\cdots,c_5)\)</span> where <span
-class="math inline">\(c_4=c_1\cdot c_2\)</span> and <span
-class="math inline">\(c_5=c_4\cdot (c_1+c_3)\)</span>.</p>
-<p>In this example, Alice wants to prove that she knows a legal
-assignment <span class="math inline">\((c_1,\cdots,c_5)\)</span> such
-that <span class="math inline">\(c_5=7\)</span>.</p>
-<p>We associate each multiplication gate with a field element: <span
-class="math inline">\(g_1\)</span> will be associated with <span
-class="math inline">\(1\in \mathbb{F}_p\)</span> and <span
-class="math inline">\(g_2\)</span> with <span class="math inline">\(2\in
-\mathbb{F}_p\)</span>. We call the points <span
-class="math inline">\(\{1,2\}\)</span> our target points. Now we need to
-define a set of "left wire polynomials" <span
-class="math inline">\(L_1,\cdots,L_5\)</span>, "right wire polynomials"
-<span class="math inline">\(R_1,\cdots,R_5\)</span> and "output wire
-polynomials" <span class="math inline">\(O_1,\cdots,O_5\)</span>.</p>
-<p><span class="math inline">\(w_1,w_2,w_4\)</span> are respectively the
-left, right and output wire of <span class="math inline">\(g_1\)</span>;
-define <span class="math inline">\(L_1=R_2=O_4=2-X\)</span>, as the
-polynomial <span class="math inline">\(2-X\)</span> is one on the point
-1 corresponding to <span class="math inline">\(g_1\)</span> and zero on
-the point 2 corresponding to <span
-class="math inline">\(g_2\)</span>.</p>
-<p><span class="math inline">\(w_1, w_3\)</span> are both right inputs
-of <span class="math inline">\(g_2\)</span>; define <span
-class="math inline">\(R_1 = R_3 = L_4 = O_5=X-1\)</span>, as <span
-class="math inline">\(X-1\)</span> is one on the point 1 corresponding
-to <span class="math inline">\(g_2\)</span> and zero on the point 1
-corresponding to <span class="math inline">\(g_1\)</span>.</p>
-<p>Set the rest of the polynomials to be the zero polynomial.</p>
-<p>Define the "sum" polynomials.</p>
-<p><span class="math display">\[L:=\sum_{i=1}^5 c_i \cdot
-L_i;R:=\sum_{i=1}^5 c_i \cdot R_i;O:=\sum_{i=1}^5 c_i \cdot
-O_i;P:=L\cdot R - O\]</span></p>
-<p><span class="math inline">\(P(1)=L(1)\cdot R(1)-O(1)=c_1\cdot c_2 -
-c_4; P(2)=c_4\cdot (c_1+c_3) - c_5\)</span></p>
-<p>Define the target polynomial <span
-class="math inline">\(T(X):=(X-1)\cdot (X-2)\)</span></p>
-<p>Fact: For a Polynomial <span class="math inline">\(P\)</span> and a
-point <span class="math inline">\(a\in \mathbb{F}_p\)</span>, <span
-class="math inline">\(P(a) = 0 \Leftrightarrow P =(X-a)\cdot H\)</span>
-for some <span class="math inline">\(H\)</span>.</p>
-<p>Thus <span class="math inline">\((c_1,\cdots,c_5)\)</span> is a legal
-assignment if and only if <span class="math inline">\(T\)</span> divides
-<span class="math inline">\(P\)</span>.</p>
-<p>Now we can define a QAP as follows:</p>
-<p>A Quadratic Arithmetic Program <span class="math inline">\(Q\)</span>
-of degree <span class="math inline">\(d\)</span> and size <span
-class="math inline">\(m\)</span> consists of polynomials <span
-class="math inline">\(L_1,\cdots,L_m,R_1,\cdots,R_m,O_1,\cdots,O_m\)</span>
-and a target polynomial <span class="math inline">\(T\)</span> of degree
-<span class="math inline">\(d\)</span>.</p>
-<p>An assignment <span class="math inline">\((c_1,\cdots,c_5)\)</span>
-satisfies <span class="math inline">\(Q\)</span> if <span
-class="math inline">\(L:=\sum_{i=1}^5 c_i \cdot L_i;R:=\sum_{i=1}^5 c_i
-\cdot R_i;O:=\sum_{i=1}^5 c_i \cdot O_i;P:=L\cdot R - O\)</span>, we
-have <span class="math inline">\(T\)</span> divides <span
-class="math inline">\(P\)</span>.</p>
-<h3 id="the-pinocchio-protocol">The Pinocchio Protocol</h3>
-<p>This part shows how Alice can send a very short proof to Bob on an
-assignment to a QAP.</p>
+<h2 id="四可验证的多项式盲评估">四、可验证的多项式盲评估</h2>
+<p>同第二节，假设 Alice 拥有多项式 <span
+class="math inline">\(P\)</span>，度为 <span
+class="math inline">\(d\)</span>。Bob 随机选择 <span
+class="math inline">\(s, s\in
+\mathbb{F}_p\)</span>。在这里，额外要求如果 Alice 发送了不是正确的 <span
+class="math inline">\(E(P(s))\)</span> 的值给 Bob，Bob
+仍然接受的概率是可以忽略的。即可验证的多项式盲评估要求：</p>
 <ol type="1">
-<li>Alice chooses polynomial <span
-class="math inline">\(L,R,O,P\)</span> of degree at most $d$899
-9999999</li>
+<li>盲性（Blindness）：Alice 不知道 <span
+class="math inline">\(s\)</span> 且 Bob 不知道 <span
+class="math inline">\(P\)</span>。</li>
+<li>可验证性（Verifiability）：Alice 发送了不是正确的 <span
+class="math inline">\(E(P(s))\)</span> 的值给 Bob，Bob
+仍然接受的概率是可以忽略的。</li>
 </ol>
+<h3 id="扩展知识系数假设">扩展知识系数假设</h3>
+<p>扩展知识系数假设（extended KCA）可以如下构造：Bob 发送给 Alice 多组
+<span class="math inline">\(\alpha\)</span>-pair <span
+class="math inline">\((a_1,b_1),\cdots,(a_d,b_d)\)</span>，Alice
+仍需要在不知道 <span class="math inline">\(\alpha\)</span>
+的情况下回复某个 <span class="math inline">\(\alpha\)</span>-pair <span
+class="math inline">\((a&#39;,b&#39;)\)</span>。显然 Alice
+可以用上一节的方法，选择一些 <span class="math inline">\(\gamma \in
+\mathbb{F}_p^*\)</span> 构造 <span
+class="math inline">\((a&#39;,b&#39;)=(\gamma\cdot a_i,\gamma\cdot
+b_i),i\in [1,d]\)</span>。Alice
+也可以选择使用其他的方法，比如同时选择几个 Bob 发送的 <span
+class="math inline">\(\alpha\)</span>-pair，用它们的线性组合来构造新的
+<span class="math inline">\(\alpha\)</span>-pair。比如：Alice 选择 <span
+class="math inline">\(c_1,c_2\in \mathbb{F}_p\)</span>，并计算 <span
+class="math inline">\((a&#39;,b&#39;)=(c_1\cdot a_1+\)</span> <span
+class="math inline">\(c_2\cdot a_2,c_1 \cdot b_1 + c_2 \cdot
+b_2)\)</span>。可以验证 <span class="math inline">\(b&#39;=(c_1\cdot
+b_1+c_2\cdot b_2)=\alpha (c_1\cdot a_1+c_2\cdot a_2)=\)</span> <span
+class="math inline">\(\alpha \cdot a&#39;\)</span>，从而 <span
+class="math inline">\((a&#39;,b&#39;)\)</span> 是 <span
+class="math inline">\(\alpha\)</span>-pair。</p>
+<p>一般来说，Alice 可以选择 <span
+class="math inline">\(c_1,\cdots,c_d\in \mathbb{F}_p\)</span>，并计算
+<span class="math inline">\((a&#39;,b&#39;)\)</span> <span
+class="math inline">\(=(\sum_{i=1}^d c_i\cdot a_i,\sum_{i=1}^d c_i \cdot
+b_i)\)</span>，可以验证 <span
+class="math inline">\((a&#39;,b&#39;)\)</span> 是 <span
+class="math inline">\(\alpha\)</span>-pair。</p>
+<p>Extended KCA 表示，这是 Alice 唯一可以生成 <span
+class="math inline">\(\alpha\)</span>-pair 的方法。正式地讲，假设群
+<span class="math inline">\(G\)</span> 的阶为 <span
+class="math inline">\(p\)</span>，生成元为 <span
+class="math inline">\(g\)</span>。<span class="math inline">\(d\)</span>
+阶知识系数假设（d-power Knowledge of Coefficient
+Assumption，d-KCA）表述如下：</p>
+<p><strong>d-KCA</strong>：假设 Bob 随机选取 <span
+class="math inline">\(\alpha\in \mathbb{F}_p^*,s\in
+\mathbb{F}_p\)</span>，并发送 <span
+class="math inline">\(\alpha-\)</span>pairs <span
+class="math inline">\((g,\alpha\cdot g),(s\cdot g,\alpha s\cdot
+g),\)</span> <span class="math inline">\(\cdots,(s^d\cdot g,\alpha
+s^d\cdot g)\)</span> 给 Alice。如果 Alice 回复 <span
+class="math inline">\(\alpha-\)</span>pair <span
+class="math inline">\((a&#39;,b&#39;)\)</span>，那么 Alice
+以不可忽略的概率知道 <span
+class="math inline">\(c_0,\cdots,c_d\in\mathbb{F}_p\)</span> 使得 <span
+class="math inline">\(\sum_{i=0}^d c_i s^i \cdot g=a&#39;\)</span>。</p>
+<h3 id="可验证的多项式盲评估协议">可验证的多项式盲评估协议</h3>
+<p>假设 HH 函数 <span class="math inline">\(E(x)=x\cdot
+g\)</span>，<span class="math inline">\(g\)</span> 是上述群 <span
+class="math inline">\(G\)</span> 的生成元。 简单地说，对这样的 <span
+class="math inline">\(E\)</span> 的可验证多项式盲评估协议可构造为： 1.
+Bob 随机选取 <span class="math inline">\(\alpha\in
+\mathbb{F}_p^*\)</span>，并发送 <span
+class="math inline">\(\alpha-\)</span>pairs <span
+class="math inline">\((g,\alpha\cdot g),(s\cdot g,\alpha s\cdot
+g),\)</span> <span class="math inline">\(\cdots,(s^d\cdot g,\alpha
+s^d\cdot g)\)</span> 给 Alice。 2. Alice 用接收到的值计算 <span
+class="math inline">\(a=P(s)\cdot g, b=\alpha P(s)\cdot g\)</span>
+并发送给 Bob。 3. Bob 检查 <span class="math inline">\((a,b)\)</span>
+是否是 <span
+class="math inline">\(\alpha\)</span>-pair，若是则接受。</p>
+<p>首先，因为 <span class="math inline">\(P(s)\cdot g\)</span> 是一种
+<span class="math inline">\(g,s\cdot g, \cdots, s^d\cdot g\)</span>
+的线性组合关系，<span class="math inline">\(\alpha P(s)\cdot g\)</span>
+是 <span class="math inline">\(\alpha \cdot g,\alpha s\cdot g, \cdots,
+\alpha s^d\cdot g\)</span> 的线性组合关系，所以如果 Alice 知道多项式
+<span class="math inline">\(P\)</span>，那么她一定可以借由 HH
+的性质计算出多项式 <span class="math inline">\(P\)</span> 的结果。</p>
+<p>其次，根据 d-KCA，如果 Alice 返回了正确的 <span
+class="math inline">\(\alpha\)</span>-pair，那么几乎可以确信 Alice 知道
+<span class="math inline">\(c_0,\cdots,c_d\in\mathbb{F}_p\)</span> 使得
+<span class="math inline">\(\sum_{i=0}^d c_i s^i \cdot
+g=a&#39;\)</span>。此时，<span class="math inline">\(a=P(s)\cdot
+g\)</span>，Alice 知道多项式 $P(X)=_{i=0}^d c_i X^i $。</p>
+<h2 id="五从计算到多项式">五、从计算到多项式</h2>
+<p>本节将介绍 <em>Quadratic Arithmetic Program</em> (QAP)，当前最实用的
+zk-SNARK 构造基础。</p>
+<p>假设 Alice 想要向 Bob 证明她知道这样的 <span
+class="math inline">\(c_1,c_2,c_3\in \mathbb{F}_p\)</span> 使得 <span
+class="math inline">\((c_1\cdot c_2)\cdot
+(c_1+c_3)=7\)</span>。那么，第一步，就是将 <span
+class="math inline">\(c_1,c_2,c_3\)</span>
+的计算表达式转化成等价的算数电路。</p>
+<h3 id="算数电路">算数电路</h3>
+<p>一个算数电路包括加法门和乘法门，以及连接线组成。本节所用的例子如下：</p>
+<p><img data-src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/CircuitDrawing-1.png" alt="img" style="zoom:60%;" /></p>
+<p>最底层的连接线（<span
+class="math inline">\(w_1,w_2,w_3\)</span>）就是输入线（input
+wires），最顶层的线（<span
+class="math inline">\(w_5\)</span>）就是输出线（output wire），转化成
+QAP 的流程如下：</p>
+<ul>
+<li>当相同的输出线，输入不同的门，它们记为同样的输入线，如 <span
+class="math inline">\(w_1\)</span>。</li>
+<li>乘法门有两个输入线，左输入和右输入。</li>
+<li>加法门并不计入输入线，只计入乘法门的输入，如 <span
+class="math inline">\(w_1, w_3\)</span> 都是 <span
+class="math inline">\(g_2\)</span> 的右输入。</li>
+</ul>
+<p>电路的一个合法赋值（legal
+assignment）就是电路中线和门的关系是相对应的。对上图的电路而言，一个合法赋值就是
+<span class="math inline">\((c_1,\cdots,c_5)\)</span> 其中 <span
+class="math inline">\(c_4=c_1\cdot c_2, c_5=c_4 \cdot
+(c_1+c_3)\)</span>。Alice 想要证明的是，她拥有这样的一组合法赋值 <span
+class="math inline">\((c_1,\cdots,c_5)\)</span> 且 <span
+class="math inline">\(c_5=7\)</span>。</p>
+<h3 id="到-qap-的规约">到 QAP 的规约</h3>
+<p>将每个乘法门与域中元素对应，<span class="math inline">\(g_1\)</span>
+对应 <span class="math inline">\(1\in \mathbb{F}_p\)</span>，<span
+class="math inline">\(g_2\)</span> 对应 <span class="math inline">\(2\in
+\mathbb{F}_p\)</span>。将 <span class="math inline">\(\{1,2\}\)</span>
+叫做目标点（targer points），同时记左线多项式（left wire polynomials）为
+<span class="math inline">\(L_1,\cdots,L_5\)</span>，右线多项式（right
+wire polynomials）为 <span
+class="math inline">\(R_1,\cdots,R_5\)</span>，输出线多项式（output wire
+polynomials）为 <span
+class="math inline">\(O_1,\cdots,O_5\)</span>。</p>
+<p><span class="math inline">\(w_1,w_2,w_4\)</span> 分别是 <span
+class="math inline">\(g_1\)</span> 的左输入线、右输入线和输出线。记
+<span class="math inline">\(L_1=R_2=O_4=2-X\)</span>，多项式 <span
+class="math inline">\(2-X\)</span> 在点 <span
+class="math inline">\(1\)</span> 处取值为 <span
+class="math inline">\(1\)</span> 和 <span
+class="math inline">\(g_1\)</span> 相关联，在点 <span
+class="math inline">\(2\)</span> 处取值为 <span
+class="math inline">\(0\)</span> 和 <span
+class="math inline">\(g_2\)</span> 相关联。<span
+class="math inline">\(w_1,w_3\)</span> 是 <span
+class="math inline">\(g_2\)</span> 的右输入线，<span
+class="math inline">\(w_4\)</span> 是 <span
+class="math inline">\(g_2\)</span> 的左输入线，<span
+class="math inline">\(w_5\)</span> 是 <span
+class="math inline">\(g_2\)</span> 的输出线。记 <span
+class="math inline">\(L_4=R_1=R_3=O_5=X-1\)</span>，多项式 <span
+class="math inline">\(X-1\)</span> 在点 <span
+class="math inline">\(2\)</span> 处取值为 <span
+class="math inline">\(1\)</span> 和 <span
+class="math inline">\(g_2\)</span> 相关联，在点 <span
+class="math inline">\(1\)</span> 处取值为 <span
+class="math inline">\(0\)</span> 和 <span
+class="math inline">\(g_1\)</span>
+相关联。其余的多项式全部为零多项式。</p>
+<p>定义<strong>和多项式</strong>（sum polynomials）为 <span
+class="math display">\[L:=\sum_{i=1}^5 c_i \cdot L_i;R:=\sum_{i=1}^5 c_i
+\cdot R_i;O:=\sum_{i=1}^5 c_i \cdot O_i.\]</span></p>
+<p>同时 <span class="math inline">\(P:=L\cdot R - O\)</span>。 <span
+class="math inline">\((c_1,\cdots,c_5)\)</span> 是一组合法赋值，
+当且仅当 <span class="math inline">\(P\)</span>
+在所有目标点的值都为零。例如，<span class="math inline">\(P(1)=L(1)\cdot
+R(1)-O(1)=c_1\cdot c_2 - c_4; P(2)=c_4\cdot (c_1+c_3) -
+c_5\)</span>。</p>
+<p>基于代数事实（algebraic fact）：对给定的多项式 <span
+class="math inline">\(P\)</span> 和 <span class="math inline">\(a\in
+\mathbb{F}_p\)</span>，$P(a)=0 $ <span
+class="math inline">\(\Leftrightarrow P=H\cdot (X-a)\)</span>，<span
+class="math inline">\(H\)</span> 也是一个多项式。</p>
+<p>记目标多项式（target polynomial） <span
+class="math inline">\(T(X):=(X-1)\cdot (X-2)\)</span>，<span
+class="math inline">\(T\)</span> 整除 <span
+class="math inline">\(P\)</span> 当且仅当 <span
+class="math inline">\((c_1,\cdots,c_5)\)</span> 是一组合法赋值。</p>
+<p>现在，我们可以给出 QAP 的定义如下：</p>
+<p>一个度数为 <span class="math inline">\(d\)</span>，大小为 <span
+class="math inline">\(m\)</span> 的QAP <span
+class="math inline">\(Q\)</span>，包括多项式 <span
+class="math inline">\(L_1,\cdots,L_m,R_1,\cdots,R_m,O_1,\cdots,O_m\)</span>
+和一个度数为 <span class="math inline">\(d\)</span> 的目标多项式 <span
+class="math inline">\(T\)</span>。一组满足 <span
+class="math inline">\(Q\)</span> 的合法赋值 <span
+class="math inline">\((c_1,\cdots,c_5)\)</span> 当且仅当定义 <span
+class="math inline">\(L:=\sum_{i=1}^5 c_i \cdot L_i;R:=\sum_{i=1}^5 c_i
+\cdot R_i;O:=\sum_{i=1}^5 c_i \cdot O_i;P:=L\cdot R - O\)</span>, 且
+<span class="math inline">\(T\)</span> 整除 <span
+class="math inline">\(P\)</span>。</p>
+<h3 id="pinocchio-协议">Pinocchio 协议</h3>
+<p>这一节介绍 Pinocchio 协议， Alice 如何通过更简短的证明向 Bob
+证实自己拥有满足 QAP 的一个合法赋值。</p>
+<p>从上一节可知，Alice 拥有一个合法赋值，就意味着对于多项式 <span
+class="math inline">\(L,R,O,P\)</span>，存在着一个多项式 <span
+class="math inline">\(H\)</span>，使得 <span
+class="math inline">\(P=H\cdot T\)</span>。即 <span
+class="math inline">\(\forall s\in \mathbb{F}_p, P(s)=H(s)\cdot
+T(s)\)</span>。由 Schwartz-Zippel 定理可知，如果 Alice
+没有这样的赋值，那么找到 <span class="math inline">\(H\)</span> 使得
+<span class="math inline">\(P=H\cdot T\)</span> 的概率是可以忽略的。</p>
+<p>可以构造如下的协议去测试 Alice 是否拥有一个合法的赋值：</p>
+<ol type="1">
+<li>Alice 选择度数最高为 <span class="math inline">\(d\)</span> 的多项式
+<span class="math inline">\(L,R,O,H\)</span>。</li>
+<li>Bob 随机选择点 <span class="math inline">\(s\in
+\mathbb{F}_p\)</span> 并计算 <span
+class="math inline">\(E(T(s))\)</span>。</li>
+<li>Alice 发送给 Bob 这些多项式在 <span class="math inline">\(s\)</span>
+点的评估值的 HH 值，<span
+class="math inline">\(E(L(s)),E(R(s)),\)</span> <span
+class="math inline">\(E(O(s)),E(H(s))\)</span>。</li>
+<li>Bob 检查 <span class="math inline">\(E(L(s)\cdot R(s)-
+O(s))\)</span> 是否等于 <span class="math inline">\(E(T(s)\cdot
+H(s))\)</span>。</li>
+</ol>
+<p>如果 Alice 不知道一个合法的赋值，那么协议运行多次，Bob
+可以以极高的概率拒绝 Alice 的回复。关于 Alice 如何在不知道 <span
+class="math inline">\(s\)</span>
+的情况下，计算这些多项式的值，在可验证的盲评估协议中已经解决。</p>
+<h2 id="六确保-alice-使用了正确的多项式">六、确保 Alice
+使用了正确的多项式</h2>
+<p>如果 Alice 没有一组合法的赋值，并不代表她不能找到满足 <span
+class="math inline">\(L\cdot R - O=H\cdot T\)</span> 的度最高为 <span
+class="math inline">\(d\)</span> 的多项式 <span
+class="math inline">\(L,R,O,H\)</span>。这只是说明，Alice
+不能找到从一组赋值中产生的对应的多项式。上一节保证了 Alice 使用的多项式
+<span class="math inline">\(L,R,O\)</span>
+的度数是正确的，但不能说明它们式由合法赋值产生的。</p>
+<p>这里用一个不准确的方法来结局，定义多项式 <span
+class="math inline">\(F:=L+X^{d+1}\cdot R+X^{2(d+1)}\cdot
+O\)</span>，其中 <span class="math inline">\(X^{d+1},X^{2(d+1)}\)</span>
+是保证 <span class="math inline">\(L,R,O\)</span> 的系数不会混淆，<span
+class="math inline">\(1,X,\cdots,X^d\)</span> 是 <span
+class="math inline">\(L\)</span> 的系数，<span
+class="math inline">\(X^{d+1},\cdots,X^{2d+1}\)</span> 是 <span
+class="math inline">\(R\)</span> 的系数，<span
+class="math inline">\(X^{2(d+1)},\cdots,X^{3d+2}\)</span> 是 <span
+class="math inline">\(O\)</span> 的系数。</p>
+<p>同样地，可以将 QAP 中的多项式合并起来，为每一个 <span
+class="math inline">\(i\in\{1,\cdots,m\}\)</span> 定义一个多项式 <span
+class="math inline">\(F_i=L_i+X^{d+1}\cdot R_i+X^{2(d+1)}\cdot
+O_i\)</span>。同样地，对一组赋值 <span
+class="math inline">\((c_1,\cdots,c_m)\)</span> 而言，<span
+class="math inline">\(F=\sum_{i=1}^m c_i\cdot F_i\)</span>，我们也会有
+<span class="math inline">\(L=\sum_{i=1}^5 c_i \cdot L_i;R=\sum_{i=1}^5
+c_i \cdot R_i;O=\sum_{i=1}^5 c_i \cdot O_i\)</span>。也就是说如果 <span
+class="math inline">\(F\)</span> 是 <span
+class="math inline">\(F_i\)</span> 的线性组合，那么 <span
+class="math inline">\(L,R,O\)</span> 是由一组合法赋值产生的。</p>
+<p>Bob 将需要 Alice 对其证明 <span class="math inline">\(F\)</span> 是
+<span class="math inline">\(F_i\)</span> 的线性组合。Bob 随机选择 <span
+class="math inline">\(\beta \in \mathbb{F}_p^*\)</span>，并发送 <span
+class="math inline">\(E(\beta \cdot F_1(s)),\cdots, E(\beta \cdot
+F_m(s))\)</span> 给 Alice。Alice 需要回复 <span
+class="math inline">\(E(\beta \cdot F(s))\)</span>。 如果 Alice
+回复了正确的值，那么 d-KCA 保证了 Alice 知道如何将 <span
+class="math inline">\(F_i\)</span> 线性组合成 <span
+class="math inline">\(F\)</span>。</p>
+<h3 id="零知识部分隐藏赋值">零知识部分——隐藏赋值</h3>
+<p>在 zk-SNARK 中，Alice 想要隐藏关于自己拥有的合法赋值的信息，但 <span
+class="math inline">\(E(L(s)),E(R(s)),\)</span> <span
+class="math inline">\(E(O(s)),E(H(s))\)</span>
+仍会泄漏一些关于赋值信息。比如，对给定的赋值 <span
+class="math inline">\((c_1&#39;,\cdots,c_m&#39;)\)</span>，Bob
+可以计算出相关的 <span
+class="math inline">\(L&#39;,R&#39;,O&#39;,H&#39;\)</span> 和 <span
+class="math inline">\(E(L&#39;(s)),E(R&#39;(s)),E(O&#39;(s)),E(H&#39;(s))\)</span>，如果这些不同于
+Alice 的回复，那么 Bob 知道 <span
+class="math inline">\((c_1&#39;,\cdots,c_m&#39;)\)</span> 不是 Alice
+所拥有的赋值。</p>
+<p>因此，Alice 通过为每个多项式增加一个随机 T 偏移（random T
+shift）来隐藏真实的多项式，即 Alice 随机选择 <span
+class="math inline">\(\delta_1,\delta_2,\delta_3 \in
+\mathbb{F}_p^*\)</span>，记 <span class="math inline">\(L_z:=L+\delta_1
+\cdot T,R_z:=R+\delta_2 \cdot T,\)</span> <span
+class="math inline">\(O_z:=O+\delta_3 \cdot T, H_z=H+L\cdot \delta_2 + R
+\cdot \delta_1+T\cdot \delta_1 \delta_2 - \delta_3\)</span>，可以验证
+<span class="math inline">\(L_z \cdot R_z - O_z\)</span> $ = TH_z$。</p>
+<h2 id="七椭圆曲线的配对">七、椭圆曲线的配对</h2>
+<p>本节将介绍椭圆曲线，一个支持乘法的
+HH，也同样足够将交互式的系统转化为非交互式的系统。</p>
+<h3 id="椭圆曲线和它们的配对">椭圆曲线和它们的配对</h3>
+<p>假定 <span class="math inline">\(p\)</span> 是一个大于 3
+的素数，找一些 <span class="math inline">\(u,v\in \mathbb{F}_p\)</span>
+使得 <span class="math inline">\(4u^3+27u^2\neq
+0\)</span>。然后考察如下方程 <span class="math display">\[Y^2=X^3+u\cdot
+X + v\]</span></p>
+<p>一个椭圆曲线 <span
+class="math inline">\(\mathcal{C}\)</span>，就是满足上述方程的点 <span
+class="math inline">\((x,y)\)</span>
+的集合。用满足这个方程的点的集合，和一个特殊点 <span
+class="math inline">\(\mathcal{O}\)</span> 构造一个新的群，点 <span
+class="math inline">\(\mathcal{O}\)</span> 也叫做无限点（point at
+infinity）、零元（zero）、单位元（identity element）。</p>
+<p>群中的加法由除子类群（divisor class
+group）派生，在除子类群中，在任意线上，点的加和必须为零，即 <span
+class="math inline">\(\mathcal{O}\)</span>。</p>
+<p>在椭圆曲线中，由 <span class="math inline">\(X=c\)</span>
+所确定的竖直线与椭圆曲线在点 <span
+class="math inline">\(P=(x_1,y_1)\)</span>
+处相交，由于椭圆曲线关于横轴的对成型，那么点 <span
+class="math inline">\(Q=(x_1,-y_1)\)</span> 也一定是交点。因为， <span
+class="math inline">\(Y\)</span> 的阶数为
+2，所以这也是仅有的两个交点。于是 <span
+class="math inline">\(P+Q=\mathcal{O}\)</span>，<span
+class="math inline">\(Q\)</span> 是 <span
+class="math inline">\(P\)</span> 在群中的相反数。</p>
+<p>如果 <span class="math inline">\(P=(x_1,y_1),Q=(x_2,y_2),x_1\neq
+x_2\)</span>，那么可以做一条直线 PQ 与椭圆曲线相交，因此 <span
+class="math inline">\(x\)</span> 的阶数为 3，因此必然还有一个交点 <span
+class="math inline">\(R\)</span>，且 <span
+class="math inline">\(P+Q+R=\mathcal{O}\)</span>，即 <span
+class="math inline">\(-R=P+Q\)</span>，<span
+class="math inline">\(R\)</span> 可以用翻转第二个左边的方式由 <span
+class="math inline">\(-R\)</span> 得到。</p>
+<p>因此，我们得到了群加法的运算规则，这个群通常被记为 <span
+class="math inline">\(\mathcal{C}(\mathbb{F}_p)\)</span>，下文中，我们将用
+<span class="math inline">\(G_1\)</span> 来表示。<span
+class="math inline">\(G_1\)</span> 中一共有素数 <span
+class="math inline">\(r,r\neq p\)</span> 个元素，生成元为 <span
+class="math inline">\(g\neq \mathcal{O}\)</span>。</p>
+<p>使得 <span class="math inline">\(r\)</span> 整除 <span
+class="math inline">\(p^k -1\)</span> 的最小整数 <span
+class="math inline">\(k\)</span> 成为曲线的嵌入阶（embedding
+degree）。据推测，当 <span class="math inline">\(k\)</span>
+不太小，比如至少是 6 的时候，那么 <span
+class="math inline">\(G_1\)</span> 中的离散对数问题是非常困难的。</p>
+<p>乘法群 <span class="math inline">\(\mathbb{F}_p^k\)</span> 包含一个
+<span class="math inline">\(r\)</span> 阶子群 <span
+class="math inline">\(G_T\)</span>，坐标不仅在 <span
+class="math inline">\(\mathbb{F}_p\)</span> 上，还能可能在 <span
+class="math inline">\(\mathbb{F}_p^k\)</span> 上的点的集合，和 <span
+class="math inline">\(\mathcal{O}\)</span> 也形成一个群。这样，除开
+<span class="math inline">\(G_1\)</span>， <span
+class="math inline">\(\mathcal{C}(\mathbb{F}^k_p)\)</span>
+还包含一个（实际上 <span class="math inline">\(r-1\)</span> 个）额外的
+<span class="math inline">\(r\)</span> 阶子群 <span
+class="math inline">\(G_2\)</span>。</p>
+<p>固定生成元 <span class="math inline">\(g\in G_1, h\in
+G_2\)</span>，我们可以获得一个高效的映射——泰特缩减配对（Tate reduced
+pairing），它将一对 <span class="math inline">\(G_1\)</span> 和 <span
+class="math inline">\(G_2\)</span> 中的元素映射到 <span
+class="math inline">\(G_T\)</span> 中的一个元素，使得：</p>
+<ol type="1">
+<li><span class="math inline">\(Tate(g,h)=\mathbf{g}\)</span>，<span
+class="math inline">\(\mathbf{g}\)</span> 是 <span
+class="math inline">\(G_T\)</span> 的生成元。</li>
+<li>对给定的 <span class="math inline">\(a,b\in \mathbb{F}_p^k,
+Tate(a\cdot g,b\cdot h)=\mathbf{g}^{ab}\)</span>。</li>
+</ol>
+<p>Tate 的定义不在本文的考虑范围内，下面给出一个 Tate 的定义概要：</p>
+<p>对于给定的 <span class="math inline">\(a\in
+\mathbb{F}_p\)</span>，多项式 <span
+class="math inline">\((X-a)^r\)</span> 在 <span
+class="math inline">\(a\)</span> 处有一个重数为 <span
+class="math inline">\(r\)</span> 的零点，并且再没有其他零点。对于点
+<span class="math inline">\(P\in
+G_1\)</span>，除数使我们证明存在一个从曲线到 <span
+class="math inline">\(\mathbb{F}_p\)</span> 的映射 <span
+class="math inline">\(f_P\)</span>。从某种意义上，除了在 <span
+class="math inline">\(P\)</span> 处的 <span
+class="math inline">\(r\)</span> 重零点，没有其他零点，<span
+class="math inline">\(Tate(P,Q):= f_P(Q)^{(p^k-1)/r}\)</span>。</p>
+<p>定义 <span class="math inline">\(E_1(x):=x \cdot g,E_2(x):=x \cdot
+h,E_3(x):=x \cdot
+\mathbb{g}\)</span>，我们得到一个弱化版的支持加法和乘法的 HH。</p>
+<h3 id="crs-模型中的非交互式证明">CRS 模型中的非交互式证明</h3>
+<p>从直觉上讲，典型的非交互式证明应该是这样的。为了证明一个声明（claim），证明这广播简单的信息给所有人，使得任何收到这条信息的人都可以确信证明者的声明。</p>
+<p>一个稍微宽松点的非交互式证明允许引入一个公共字符串（common reference
+string， CRS）。在 CRS 模型中，在证明过程开始之前，有一个设置阶段（setup
+phase），设置阶段中随机产生一个字符串，并广播给所有人。这个字符串就称为
+CRS。由于 CRS 是随机产生的，当事人无法用它来构造假的证明。</p>
+<p>下面将介绍如何在 CRS
+模型下，将可验证的盲评估协议转化为非交互式证明系统。</p>
+<h3 id="一个非交互式评估协议">一个非交互式评估协议</h3>
+<p>非交互式的盲评估协议，很显然将 Bob 发送的第一条信息当作 CRS。</p>
+<p><strong>设置阶段（Setup）</strong>：随机选择 <span
+class="math inline">\(\alpha \in \mathbf{F}_r^*,s\in
+\mathbf{F}_r\)</span>，并公开 CRS <span
+class="math inline">\((E_1(1),E_1(s)\cdots,E_1(s^d),\)</span> <span
+class="math inline">\(E_2(\alpha),E_2(\alpha s),\cdots,E_2(\alpha
+s^d),)\)</span>。</p>
+<p><strong>证明阶段（Proof）</strong>：Alice 使用 CRS 的元素和 HH
+的线性组合性质计算 $a=E_1(P(s)), $ <span
+class="math inline">\(b=E_2(\alpha P(S))\)</span>。</p>
+<p><strong>验证阶段（Verification）</strong>：固定 <span
+class="math inline">\(x,y\in \mathbf{F}_r\)</span> 使得 <span
+class="math inline">\(a=E_1(x),b=E_2(y)\)</span>。Bob 计算 <span
+class="math inline">\(E(\alpha
+x)=Tate(E_1(x),E_2(\alpha)),E(y)=Tate(E_1(1),E_2(y))\)</span>
+并检查二者是否相等。若相等，则 <span class="math inline">\(y=\alpha
+x\)</span>。</p>
+<p>如第四节所述，Alice 若想构造通过验证的 <span
+class="math inline">\((a,b)\)</span>，则必须知道 <span
+class="math inline">\(d\)</span> 阶多项式 <span
+class="math inline">\(P\)</span>。和交互式证明最主要的不同就是，Bob
+不再需要 <span class="math inline">\(\alpha\)</span> 去验证，Bob
+可以使用 CRS 中的元素 <span
+class="math inline">\(E_1(x),E_2(\alpha)\)</span> 来计算 <span
+class="math inline">\(E(\alpha x)\)</span>。</p>
 
     </div>
 
