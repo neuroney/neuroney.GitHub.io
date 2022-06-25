@@ -133,7 +133,7 @@ $\cdots,(s^d\cdot g,\alpha s^d\cdot g)$ 给 Alice。
 
 ### 到 QAP 的规约
 
-将每个乘法门与域中元素对应，$g_1$ 对应 $1\in \mathbb{F}_p$，$g_2$ 对应 $2\in \mathbb{F}_p$。将 $\{1,2\}$ 叫做目标点（targer points），同时记左线多项式（left wire polynomials）为 $L_1,\cdots,L_5$，右线多项式（right wire polynomials）为 $R_1,\cdots,R_5$，输出线多项式（output wire polynomials）为 $O_1,\cdots,O_5$。
+将每个乘法门与域中元素对应，$g_1$ 对应 $1\in \mathbb{F}_p$，$g_2$ 对应 $2\in \mathbb{F}_p$。将 $\{1,2\}$ 叫做目标点（target points），同时记左线多项式（left wire polynomials）为 $L_1,\cdots,L_5$，右线多项式（right wire polynomials）为 $R_1,\cdots,R_5$，输出线多项式（output wire polynomials）为 $O_1,\cdots,O_5$。
 
 $w_1,w_2,w_4$ 分别是 $g_1$ 的左输入线、右输入线和输出线。记 $L_1=R_2=O_4=2-X$，多项式 $2-X$ 在点 $1$ 处取值为 $1$ 和 $g_1$ 相关联，在点 $2$ 处取值为 $0$ 和 $g_2$ 相关联。$w_1,w_3$ 是 $g_2$ 的右输入线，$w_4$ 是 $g_2$ 的左输入线，$w_5$ 是 $g_2$ 的输出线。记 $L_4=R_1=R_3=O_5=X-1$，多项式 $X-1$ 在点 $2$ 处取值为 $1$ 和 $g_2$ 相关联，在点 $1$ 处取值为 $0$ 和 $g_1$ 相关联。其余的多项式全部为零多项式。
 
