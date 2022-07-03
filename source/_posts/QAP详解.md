@@ -21,7 +21,7 @@ $$F: \mathbb{F}_{11}\times \mathbb{F}_{11}\times \mathbb{F}_{11}\times \mathbb{F
 
 在域 $\mathbb{F}_{11}$ 上的算数电路是有向的非循环图。上述函数可以表达为如下的算数电路：
 
-<img src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/Example%20circuit.png" alt="Example circuit" style="zoom:67%;" />
+<img src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/Example%20circuit.png" alt="Example circuit" style="zoom:45%;" />
 
 - 该电路中有两个乘法门，分别记为 $r_5$ 和 $r_6$，对应输出线 $c_5$ 和 $c_6$
 - 记变量集合为 $\{c_1,c_2,c_3,c_4,c_5,c_6\}$
@@ -41,7 +41,7 @@ R1CS 是三个向量组 $(\mathcal{V},\mathcal{W},\mathcal{Y})$ 所构成的一�
 
 比如$v_1=\{0,0,1,0,0,0\},w_1=\{0,0,0,1,0,0\},y_1=\{0,0,0,0,1,0\}, \mathcal{C}=\{1,2,2,2,4,1\}$ 就是一组满足的 R1CS。这表示着检查 $c_3*c_4-c_5$，即对乘法门 $r_5$ 的检查。若结果为 $0$，则赋值 $\mathcal{C}$ 通过了 $r_5$ 的检查，否则不通过。
 
-![A satisdied R1CS](https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/A%20satisdied%20R1CS.png)
+<img src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/A%20satisdied%20R1CS.png" alt="A satisdied R1CS" style="zoom:67%;" />
 
 为了得到可以表示上一节所示电路的 R1CS，我们对上述的电路作如下转换：
 
