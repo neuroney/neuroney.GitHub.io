@@ -141,7 +141,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-07-03 16:57:39" itemprop="dateModified" datetime="2022-07-03T16:57:39+08:00">2022-07-03</time>
+      <time title="Modified: 2022-07-03 17:06:50" itemprop="dateModified" datetime="2022-07-03T17:06:50+08:00">2022-07-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -282,22 +282,27 @@ class="math inline">\(r_5\)</span> 和 <span
 class="math inline">\(r_6\)</span>
 上的取值，那么我们可以使用拉格朗日插值法来确定这个多项式。不妨设 <span
 class="math inline">\(r_5=5,r_6=7\)</span>，那么：</p>
-<p><span class="math display">\[v_1=\frac{x-r_6}{r_5-r_6}\times
+<p><span
+class="math display">\[\begin{aligned}v_1&amp;=\frac{x-r_6}{r_5-r_6}\times
 0+\frac{x-r_5}{r_6-r_5}\times 1=6x+3 \\
-v_2=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times 1=6x+3 \\
-v_3=\frac{x-r_6}{r_5-r_6}\times 1+\frac{x-r_5}{r_6-r_5}\times 0=5x+9 \\
-v_4=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times 0=0 \\
-v_5=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times 0=0 \\
-v_6=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times 0=0
-\]</span></p>
+v_2&amp;=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times
+1=6x+3 \\
+v_3&amp;=\frac{x-r_6}{r_5-r_6}\times 1+\frac{x-r_5}{r_6-r_5}\times
+0=5x+9 \\
+v_4&amp;=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times 0=0
+\\
+v_5&amp;=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times 0=0
+\\
+v_6&amp;=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times 0=0
+\end{aligned}\]</span></p>
 <p>注意：所有的运算都在 <span
 class="math inline">\(\mathbb{F}_{11}\)</span> 上完成。</p>
 <p>同样地，我们可以完成对向量组 <span
 class="math inline">\(\mathcal{W}\)</span> 和 <span
 class="math inline">\(\mathcal{Y}\)</span> 的构造，即 <span
 class="math inline">\(\mathcal{V}=\{6x+3,6x+3,5x+9,0,0,0\},
-\mathcal{W}=\{0,0,0,5x+9,6x+3,0\},
-\mathcal{V}=\{0,0,0,0,5x+9,6x+3\}\)</span>。</p>
+\mathcal{W}=\{0,0,0,5x+9,6x+3,0\},\)</span> <span
+class="math inline">\(\mathcal{Y}=\{0,0,0,0,5x+9,6x+3\}\)</span>。</p>
 <h2 id="四检验-qap">四、检验 QAP</h2>
 <p>现在可以通过使用对这些向量组点乘的方式，一次性检验所有的 R1CS
 条件。</p>
@@ -325,17 +330,18 @@ class="math inline">\(P(x)\)</span> 的零点包含 <span
 class="math inline">\(t(x)\)</span>
 的零点，即包含所有乘法门的解，满足每一个 R1CS 约束。</p>
 <p>现在，则可以用如下多项式来检查 QAP 的正确性：</p>
-<p><span class="math display">\[V(x)=6x+5\\ W(x)=x+8\\ Y(x)=4x+6\\
-P(x)=6x^2+5x+1\\
-t(x)=x^2+10x+2\\ H=P(x)/t(x)=6\]</span></p>
+<p><span class="math display">\[\begin{aligned}V(x)&amp;=6x+5\\
+W(x)&amp;=x+8\\ Y(x)&amp;=4x+6\\ P(x)&amp;=6x^2+5x+1\\
+t(x)&amp;=x^2+10x+2\\ H&amp;=P(x)/t(x)=6\end{aligned}\]</span></p>
 <p>这里的 <span class="math inline">\(H\)</span> 是没有余数的，即对这个
 QAP，以及其所表示的电路而言， <span
 class="math inline">\(\{1,2,2,2,1\}\)</span>
 是一组合法的赋值。如果我们尝试另一组变量赋值 <span
 class="math inline">\(\mathcal{C}&#39;=\{1,1,1,1,2,3\}\)</span>，那么：</p>
-<p><span class="math display">\[V(x)=6x+4\\ W(x)=6x+4\\ Y(x)=6x+5\\
-P(x)=3x^2+9x\\
-t(x)=x^2+10x+2\\ H=P(x)/t(x)=3+\frac{x+5}{x^2+10x+2}\]</span></p>
+<p><span class="math display">\[\begin{aligned}V(x)&amp;=6x+4\\
+W(x)&amp;=6x+4\\ Y(x)&amp;=6x+5\\ P(x)&amp;=3x^2+9x\\
+t(x)&amp;=x^2+10x+2\\
+H&amp;=P(x)/t(x)=3+\frac{x+5}{x^2+10x+2}\end{aligned}\]</span></p>
 <p>这里的 <span class="math inline">\(H\)</span>
 是有余数的，不是整多项式，即 <span
 class="math inline">\(=\{1,1,1,1,3\}\)</span> 不是一组合法的赋值。</p>
@@ -362,7 +368,8 @@ class="math inline">\((c_{n+1},\cdots,c_{m-n&#39;})\in
 \mathbb{F}^{m-n-n&#39;}\)</span> 满足 <span
 class="math inline">\(t(x)\)</span> 整除 <span
 class="math inline">\((v_0(x)+\sum_{k=1}^{m}c_k\cdot v_k(x))\cdot
-(w_0(x)+\sum_{k=1}^{m}c_k\cdot w_k(x)) - (y_0(x)+\sum_{k=1}^{m}c_k\cdot
+(w_0(x)+\sum_{k=1}^{m}c_k\cdot w_k(x))\)</span> <span
+class="math inline">\(- (y_0(x)+\sum_{k=1}^{m}c_k\cdot
 y_k(x))\)</span>。<span class="math inline">\(Q\)</span>
 的大小（size）为 <span
 class="math inline">\(m\)</span>，其次数（degree）为 <span
