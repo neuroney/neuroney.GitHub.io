@@ -31,13 +31,13 @@ $$F: \mathbb{F}_{11}\times \mathbb{F}_{11}\times \mathbb{F}_{11}\times \mathbb{F
 
 如果 $\{c_1,c_2,c_3,c_4,c_5,c_6\}$ 可以满足这个电路，即电路上的运算都是正确的，那么就称 $\{c_1,c_2,c_3,c_4,c_6\}$ 为一组有效的赋值（valid assignment），即电路的输入与输出集合，否则就是一组无效的、非法的赋值。
 
-例如赋值集合 $\{1,2,2,2,1\}$ 是一组有效的赋值，我们总可以找到这样的集合 $\{c_5\}$ 来使得变量集合 $\{c_1,c_2,c_3,c_4,c_5,c_6\}$ 满足这个电路。
+例如赋值集合 $\{1,2,2,2,1\}$ 是一组有效的赋值，我们总可以找到这样的集合 $\{c_5\}=\{4\}$ 来使得变量集合 $\{c_1,c_2,c_3,c_4,c_5,c_6\}=\{1,2,2,2,4,1\}$ 满足这个电路。
 
 我们的目的就是通过将这样的算数电路转换为等价的 QAP 形式，来检验 $\{c_1,c_2,c_3,c_4,c_6\}$ 是否是一个合法的赋值。
 
 ## 二、从算数电路到 R1CS
 
-R1CS 是三个向量组 $(\mathcal{V},\mathcal{W},\mathcal{Y})$ 所构成的一个序列, R1CS 的解是一个向量 $\mathcal{C}$。其中 $\mathcal{V}=\{v_{1},v_2,\dots,v_m\},\mathcal{W}=\{w_1,w_2,\dots,w_m\},\mathcal{Y}=\{y_{1},y_2,\dots,y_m\}, \mathcal{C}=\{c_{1},c_2,\dots,c_m\}$ 且 $(\mathcal{C}\circ v_i) * (\mathcal{C}\circ w_i) - (\mathcal{C}\circ y_i), i\in\{1,\dots,m\}$，$\circ$ 代表着两个向量对应位置点乘后将所得乘积求和。  
+R1CS 是三个向量组 $(\mathcal{V},\mathcal{W},\mathcal{Y})$ 所构成的一个序列, R1CS 的解是一个向量 $\mathcal{C}$。其中 $\mathcal{V}=\{v_{1},v_2,\dots,v_m\},\mathcal{W}=\{w_1,w_2,\dots,w_m\},\mathcal{Y}=\{y_{1},y_2,\dots,y_m\}, \mathcal{C}=\{c_{1},c_2,\dots,c_m\}$ 且 $(\mathcal{C}\circ v_i) * (\mathcal{C}\circ w_i) - (\mathcal{C}\circ y_i)=0, i\in\{1,\dots,m\}$，$\circ$ 代表着两个向量对应位置点乘后将所得乘积求和。  
 
 比如$v_1=\{0,0,1,0,0,0\},w_1=\{0,0,0,1,0,0\},y_1=\{0,0,0,0,1,0\}, \mathcal{C}=\{1,2,2,2,4,1\}$ 就是一组满足的 R1CS。这表示着检查 $c_3*c_4-c_5$，即对乘法门 $r_5$ 的检查。若结果为 $0$，则赋值 $\mathcal{C}$ 通过了 $r_5$ 的检查，否则不通过。
 
@@ -51,7 +51,7 @@ R1CS 是三个向量组 $(\mathcal{V},\mathcal{W},\mathcal{Y})$ 所构成的一�
 
 例如，乘法门 $r_6$ 的左输入是 $c_1$ 和 $c_2$，右输入是 $c_5$，输出是 $c_6$。那么其对应的集合中的表示为：$v_1(r_6)=v_2(r_6)=w_5(r_6)=y_6(r_6)=1$，其余值都是 0。
 
-注意：这里输入的左右关系对应图中运算门的上下关系。我们对加法门做压缩处理，统一作为下一个乘法门的某个输入，不单独表示为一个 R1CS 约束。[Vitalik 的博客](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649)中将加法作为了单独的 R1CS 来处理。
+注意：这里输入的左右关系对应图中运算门的上下关系。我们对加法门做压缩处理，统一作为下一个乘法门的某个输入，不单独表示为一个 R1CS 约束（在本文的例子中，$c_1$ 和 $c_2$ 一起作为 $r_6$ 的左输入，而不单独表示加法门为一个新的约束条件）。[Vitalik 的博客](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649)中将加法作为了单独的约束条件来处理。
 
 这样，我们就可以得到上述电路的 R1CS 形式：
 
@@ -59,7 +59,7 @@ R1CS 是三个向量组 $(\mathcal{V},\mathcal{W},\mathcal{Y})$ 所构成的一�
 
 ## 三、从 R1CS 到 QAP
 
-我们需要将 $v_1,v_2,\cdots, y_5,y_6$ 转化为多项式的形式。对于这里的每一个多项式，我们知道其在对应乘法门 $r_5$ 和 $r_6$ 上的取值，那么我们可以使用拉格朗日插值法来确定这个多项式。不妨设 $r_5=5,r_6=7$，那么：
+我们需要将 $v_1,v_2,\cdots, y_5,y_6$ 转化为多项式的形式。对于这里的每一个多项式，我们知道其在对应乘法门 $r_5$ 和 $r_6$ 上的取值，那么我们可以使用拉格朗日插值法来确定这个多项式（最高次数为乘法门的数量减去 1）。不妨设 $r_5=5,r_6=7$，那么：
 
 $$\begin{aligned}v_1&=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times 1=6x+3 \\ 
 v_2&=\frac{x-r_6}{r_5-r_6}\times 0+\frac{x-r_5}{r_6-r_5}\times 1=6x+3 \\
