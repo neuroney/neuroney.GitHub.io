@@ -21,7 +21,7 @@ $$F: \mathbb{F}_{11}\times \mathbb{F}_{11}\times \mathbb{F}_{11}\times \mathbb{F
 
 在域 $\mathbb{F}_{11}$ 上的算数电路是有向的非循环图。上述函数可以表达为如下的算数电路：
 
-![Example circuit](https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/Example%20circuit.png)
+<img src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/Example%20circuit.png" alt="Example circuit" style="zoom:67%;" />
 
 - 该电路中有两个乘法门，分别记为 $r_5$ 和 $r_6$，对应输出线 $c_5$ 和 $c_6$
 - 记变量集合为 $\{c_1,c_2,c_3,c_4,c_5,c_6\}$
