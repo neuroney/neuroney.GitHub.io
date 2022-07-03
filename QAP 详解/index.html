@@ -22,11 +22,11 @@
 
 
 
-<link rel="canonical" href="https://neuroney.github.io/%20QAP%20%E8%AF%A6%E8%A7%A3/">
+<link rel="canonical" href="https://neuroney.github.io/QAP%20%E8%AF%A6%E8%A7%A3/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://neuroney.github.io/%20QAP%20%E8%AF%A6%E8%A7%A3/","path":" QAP 详解/","title":"QAP 详解"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://neuroney.github.io/QAP%20%E8%AF%A6%E8%A7%A3/","path":"QAP 详解/","title":"QAP 详解"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>QAP 详解 | Neptune</title>
@@ -105,7 +105,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://neuroney.github.io/%20QAP%20%E8%AF%A6%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="https://neuroney.github.io/QAP%20%E8%AF%A6%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -141,7 +141,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-07-03 17:06:50" itemprop="dateModified" datetime="2022-07-03T17:06:50+08:00">2022-07-03</time>
+      <time title="Modified: 2022-07-03 17:38:06" itemprop="dateModified" datetime="2022-07-03T17:38:06+08:00">2022-07-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -187,7 +187,7 @@ QAP。本篇文章，仅以简单的多项式为例，来说明 QAP 的转换流
 上的算数电路是有向的非循环图。上述函数可以表达为如下的算数电路：</p>
 <figure>
 <img
-src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E5%9C%9F/Example%20circuit.png"
+src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/Example%20circuit.png"
 alt="Example circuit" />
 <figcaption aria-hidden="true">Example circuit</figcaption>
 </figure>
@@ -240,7 +240,7 @@ class="math inline">\(\mathcal{C}\)</span> 通过了 <span
 class="math inline">\(r_5\)</span> 的检查，否则不通过。</p>
 <figure>
 <img
-src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E5%9C%9F/A%20satisdied%20R1CS.png"
+src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/A%20satisdied%20R1CS.png"
 alt="A satisdied R1CS" />
 <figcaption aria-hidden="true">A satisdied R1CS</figcaption>
 </figure>
@@ -263,6 +263,13 @@ class="math inline">\(w_k(r_g) = 0\)</span></li>
 class="math inline">\(y_k(r_g) = 1\)</span>，否则 <span
 class="math inline">\(y_k(r_g) = 0\)</span></li>
 </ul>
+<p>例如，乘法门 <span class="math inline">\(r_6\)</span> 的左输入是
+<span class="math inline">\(c_1\)</span> 和 <span
+class="math inline">\(c_2\)</span>，右输入是 <span
+class="math inline">\(c_5\)</span>，输出是 <span
+class="math inline">\(c_6\)</span>。那么其对应的集合中的表示为：<span
+class="math inline">\(v_1(r_6)=v_2(r_6)=w_5(r_6)=y_6(r_6)=1\)</span>，其余值都是
+0。</p>
 <p>注意：这里输入的左右关系对应图中运算门的上下关系。我们对加法门做压缩处理，统一作为下一个乘法门的某个输入，不单独表示为一个
 R1CS 约束。<a
 target="_blank" rel="noopener" href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">Vitalik
@@ -270,7 +277,7 @@ target="_blank" rel="noopener" href="https://medium.com/@VitalikButerin/quadrati
 <p>这样，我们就可以得到上述电路的 R1CS 形式：</p>
 <figure>
 <img
-src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E5%9C%9F/Example%20R1CS.png"
+src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/Example%20R1CS.png"
 alt="Example R1CS" />
 <figcaption aria-hidden="true">Example R1CS</figcaption>
 </figure>
@@ -308,7 +315,7 @@ class="math inline">\(\mathcal{Y}=\{0,0,0,0,5x+9,6x+3\}\)</span>。</p>
 条件。</p>
 <figure>
 <img
-src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E5%9C%9F/Polynomial%20checking%20R1CS.png"
+src="https://pico-1258741719.cos.ap-shanghai.myqcloud.com/blog/QAP%20%E8%AF%A6%E8%A7%A3/Polynomial%20checking%20R1CS.png"
 alt="Polynomial checking R1CS" />
 <figcaption aria-hidden="true">Polynomial checking R1CS</figcaption>
 </figure>
