@@ -1,5 +1,5 @@
 ---
-title: QAP 从入门到入土
+title: QAP 详解
 mathjax: true
 date: 2022-07-01 15:53:34
 categories: Cryptography
