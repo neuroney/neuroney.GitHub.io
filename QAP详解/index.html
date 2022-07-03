@@ -141,7 +141,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-07-03 17:45:24" itemprop="dateModified" datetime="2022-07-03T17:45:24+08:00">2022-07-03</time>
+      <time title="Modified: 2022-07-03 17:57:25" itemprop="dateModified" datetime="2022-07-03T17:57:25+08:00">2022-07-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -208,8 +208,8 @@ class="math inline">\(\{c_1,c_2,c_3,c_4,c_6\}\)</span>
 assignment），即电路的输入与输出集合，否则就是一组无效的、非法的赋值。</p>
 <p>例如赋值集合 <span class="math inline">\(\{1,2,2,2,1\}\)</span>
 是一组有效的赋值，我们总可以找到这样的集合 <span
-class="math inline">\(\{c_5\}\)</span> 来使得变量集合 <span
-class="math inline">\(\{c_1,c_2,c_3,c_4,c_5,c_6\}\)</span>
+class="math inline">\(\{c_5\}=\{4\}\)</span> 来使得变量集合 <span
+class="math inline">\(\{c_1,c_2,c_3,c_4,c_5,c_6\}=\{1,2,2,2,4,1\}\)</span>
 满足这个电路。</p>
 <p>我们的目的就是通过将这样的算数电路转换为等价的 QAP 形式，来检验 <span
 class="math inline">\(\{c_1,c_2,c_3,c_4,c_6\}\)</span>
@@ -222,7 +222,7 @@ class="math inline">\(\mathcal{C}\)</span>。其中 <span
 class="math inline">\(\mathcal{V}=\{v_{1},v_2,\dots,v_m\},\mathcal{W}=\{w_1,w_2,\dots,w_m\},\mathcal{Y}=\{y_{1},y_2,\dots,y_m\},
 \mathcal{C}=\{c_{1},c_2,\dots,c_m\}\)</span> 且 <span
 class="math inline">\((\mathcal{C}\circ v_i) * (\mathcal{C}\circ w_i) -
-(\mathcal{C}\circ y_i), i\in\{1,\dots,m\}\)</span>，<span
+(\mathcal{C}\circ y_i)=0, i\in\{1,\dots,m\}\)</span>，<span
 class="math inline">\(\circ\)</span>
 代表着两个向量对应位置点乘后将所得乘积求和。</p>
 <p>比如<span
@@ -261,9 +261,12 @@ class="math inline">\(c_6\)</span>。那么其对应的集合中的表示为：<
 class="math inline">\(v_1(r_6)=v_2(r_6)=w_5(r_6)=y_6(r_6)=1\)</span>，其余值都是
 0。</p>
 <p>注意：这里输入的左右关系对应图中运算门的上下关系。我们对加法门做压缩处理，统一作为下一个乘法门的某个输入，不单独表示为一个
-R1CS 约束。<a
+R1CS 约束（在本文的例子中，<span class="math inline">\(c_1\)</span> 和
+<span class="math inline">\(c_2\)</span> 一起作为 <span
+class="math inline">\(r_6\)</span>
+的左输入，而不单独表示加法门为一个新的约束条件）。<a
 target="_blank" rel="noopener" href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">Vitalik
-的博客</a>中将加法作为了单独的 R1CS 来处理。</p>
+的博客</a>中将加法作为了单独的约束条件来处理。</p>
 <p>这样，我们就可以得到上述电路的 R1CS 形式：</p>
 <figure>
 <img
@@ -277,8 +280,8 @@ y_5,y_6\)</span>
 转化为多项式的形式。对于这里的每一个多项式，我们知道其在对应乘法门 <span
 class="math inline">\(r_5\)</span> 和 <span
 class="math inline">\(r_6\)</span>
-上的取值，那么我们可以使用拉格朗日插值法来确定这个多项式。不妨设 <span
-class="math inline">\(r_5=5,r_6=7\)</span>，那么：</p>
+上的取值，那么我们可以使用拉格朗日插值法来确定这个多项式（最高次数为乘法门的数量减去
+1）。不妨设 <span class="math inline">\(r_5=5,r_6=7\)</span>，那么：</p>
 <p><span
 class="math display">\[\begin{aligned}v_1&amp;=\frac{x-r_6}{r_5-r_6}\times
 0+\frac{x-r_5}{r_6-r_5}\times 1=6x+3 \\
