@@ -141,7 +141,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-07-03 17:57:25" itemprop="dateModified" datetime="2022-07-03T17:57:25+08:00">2022-07-03</time>
+      <time title="Modified: 2022-07-05 16:44:06" itemprop="dateModified" datetime="2022-07-05T16:44:06+08:00">2022-07-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -322,17 +322,17 @@ alt="Polynomial checking R1CS" />
 <span
 class="math inline">\(t(x)=\prod_g(x-r_g)\)</span>，是最小的在每个乘法门出都为
 0 的多项式。这里有一个很直观的解释，如果 <span
-class="math inline">\(P(x)=V(x)*W(x)-Y(x)=H*t(x)\)</span>，即 <span
+class="math inline">\(P(x)=V(x)*W(x)-Y(x)=H(x)*t(x)\)</span>，即 <span
 class="math inline">\(P(x)\)</span> 是 <span
 class="math inline">\(t(x)\)</span> 的倍数多项式(<span
-class="math inline">\(H\)</span> 是一个整多项式)，那么 <span
+class="math inline">\(H(x)\)</span> 是一个整多项式)，那么 <span
 class="math inline">\(P(x)\)</span> 的零点包含 <span
 class="math inline">\(t(x)\)</span>
 的零点，即包含所有乘法门的解，满足每一个 R1CS 约束。</p>
 <p>现在，则可以用如下多项式来检查 QAP 的正确性：</p>
 <p><span class="math display">\[\begin{aligned}V(x)&amp;=6x+5\\
 W(x)&amp;=x+8\\ Y(x)&amp;=4x+6\\ P(x)&amp;=6x^2+5x+1\\
-t(x)&amp;=x^2+10x+2\\ H&amp;=P(x)/t(x)=6\end{aligned}\]</span></p>
+t(x)&amp;=x^2+10x+2\\ H(x)&amp;=P(x)/t(x)=6\end{aligned}\]</span></p>
 <p>这里的 <span class="math inline">\(H\)</span> 是没有余数的，即对这个
 QAP，以及其所表示的电路而言， <span
 class="math inline">\(\{1,2,2,2,1\}\)</span>
@@ -341,7 +341,7 @@ class="math inline">\(\mathcal{C}&#39;=\{1,1,1,1,2,3\}\)</span>，那么：</p>
 <p><span class="math display">\[\begin{aligned}V(x)&amp;=6x+4\\
 W(x)&amp;=6x+4\\ Y(x)&amp;=6x+5\\ P(x)&amp;=3x^2+9x\\
 t(x)&amp;=x^2+10x+2\\
-H&amp;=P(x)/t(x)=3+\frac{x+5}{x^2+10x+2}\end{aligned}\]</span></p>
+H(x)&amp;=P(x)/t(x)=3+\frac{x+5}{x^2+10x+2}\end{aligned}\]</span></p>
 <p>这里的 <span class="math inline">\(H\)</span>
 是有余数的，不是整多项式，即 <span
 class="math inline">\(=\{1,1,1,1,3\}\)</span> 不是一组合法的赋值。</p>
@@ -380,6 +380,14 @@ class="math inline">\(\deg(t(x))-1\)</span>，因为它们都可以可以模 <sp
 class="math inline">\(t(x)\)</span> 从而不影响最后整除性的检验。</p>
 <p>注意：在本文的例子中 <span
 class="math inline">\(v_0(x)=w_0(x)=y_0(x)=0\)</span>。</p>
+<h2 id="reference">Reference</h2>
+<ol type="1">
+<li>https://medium.com/<span class="citation"
+data-cites="VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</span></li>
+<li>https://eprint.iacr.org/2012/215</li>
+<li>https://www.zeroknowledgeblog.com/index.php/the-pinocchio-protocol/qap</li>
+<li>http://eprint.iacr.org/2013/279</li>
+</ol>
 
     </div>
 
@@ -398,6 +406,9 @@ class="math inline">\(v_0(x)=w_0(x)=y_0(x)=0\)</span>。</p>
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/Pinocchio%E8%AF%A6%E8%A7%A3/" rel="next" title="Pinocchio详解">
+                  Pinocchio详解 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
