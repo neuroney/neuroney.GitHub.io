@@ -348,7 +348,7 @@ $$(g^{s^i_B},g^{\alpha_B},g^{\alpha_B s^i_B})|_{i\in[d]}\quad \mathrm{where}\qua
     - 根据公布的函数 $F$，$F$ 有 $N$ 个输入输出变量，计算其 QAP 形式，包括一个目标多项式 $t(x)$ 和三个多项式集合 $\mathcal{V}=\{v_i(x)\},\mathcal{W}=w_i(x)\},\mathcal{Y}=\{y_i(x)\},i\in [m]$，其大小（size）为 $m$，次数为 $d$
     - 令 $I_{mid}=\{N+1,\cdots,m\}$
 
-    - 证明密钥：$(\{g^{s^i}\}_{i\in[d]},\{g_v^{v_i(s)},g_w^{w_i(s)},g_y^{ y_i(s)},g_v^{\alpha_v v_i(s)},g_w^{\alpha_w w_i(s)},g_y^{\alpha_y y_i(s)},g_v^{\beta v_i(s)}\cdot g_w^{\beta w_i(s)}\cdot g_y^{\beta y_i(s)}\}_{i\in I_{mid}})$
+    - 证明密钥：$$(\{g^{s^i}\}_{i\in[d]},\{g_v^{v_i(s)},g_w^{w_i(s)},g_y^{ y_i(s)},g_v^{\alpha_v v_i(s)},g_w^{\alpha_w w_i(s)},g_y^{\alpha_y y_i(s)},g_v^{\beta v_i(s)}\cdot g_w^{\beta w_i(s)}\cdot g_y^{\beta y_i(s)}\}_{i\in I_{mid}})$$
     - 验证密钥：$(g^1,g^{\alpha_v},g^{\alpha_w},g^{\alpha_y},g_y^{t},g^{\beta \gamma},g^\gamma,\{g_v^{v_i(s)},g_w^{w_i(s)},g_y^{ y_i(s)}\}_{i\in[0,N]})$
 
 - 证明（Proving）
@@ -415,7 +415,7 @@ $$(V(s)+\delta_v t(s))\cdot (W(s)+\delta_w t(s))-(Y(s)+\delta_y t(s))=t(s)\cdot 
     - 令 $I_{mid}=\{N+1,\cdots,m\}$
 
     - 证明密钥：$(\{g^{s^i}\}_{i\in[d]},\{g_v^{v_i(s)},g_w^{w_i(s)},g_y^{ y_i(s)},g_v^{\alpha_v v_i(s)},g_w^{\alpha_w w_i(s)},g_y^{\alpha_y y_i(s)},g_v^{\beta v_i(s)}\cdot g_w^{\beta w_i(s)}\cdot g_y^{\beta y_i(s)}\}_{i\in I_{mid}},g_v^{t(s)},g_w^{t(s)},g_y^{t(s)},g_v^{\alpha_v t(s)},g_w^{\alpha_w t(s)},g_y^{\alpha_y t(s)},,g_v^{\beta t(s)},g_w^{\beta t(s)},g_y^{\beta t(s)})$
-    - 验证密钥：$(g^1,g^{\alpha_v},g^{\alpha_w},g^{\alpha_y},g_y^{t},g^{\beta \gamma},g^\gamma,\{g_v^{v_i(s)},g_w^{w_i(s)},g_y^{ y_i(s)}\}_{i\in[0,N]})$
+    - 验证密钥：$$(g^1,g^{\alpha_v},g^{\alpha_w},g^{\alpha_y},g_y^{t},g^{\beta \gamma},g^\gamma,\{g_v^{v_i(s)},g_w^{w_i(s)},g_y^{ y_i(s)}\}_{i\in[0,N]})$$
 
 - 证明（Proving）
 
