@@ -242,3 +242,6 @@ $b=E_2(\alpha P(S))$。
 
 如第四节所述，Alice 若想构造通过验证的 $(a,b)$，则必须知道 $d$ 阶多项式 $P$。和交互式证明最主要的不同就是，Bob 不再需要 $\alpha$ 去验证，Bob 可以使用 CRS 中的元素 $E_1(x),E_2(\alpha)$ 来计算 $E(\alpha x)$。
 
+## Reference
+
+1. https://z.cash/technology/zksnarks

@@ -89,8 +89,8 @@ sudo launchctl kickstart -kp system/com.apple.audio.coreaudiod
 
 安装完 BlackHole，使用多输出设备作为音频输出后，无法调节音量。建议是在非录屏情况下，去“声音设置”中“输出”依旧选择默认输出设备，录屏时再使用多输出设备。
 
-## 参考链接
+## Reference
 
-https://zhuanlan.zhihu.com/p/343145329
-
-https://zhuanlan.zhihu.com/p/87715078
+1. https://zhuanlan.zhihu.com/p/343145329
+2. https://zhuanlan.zhihu.com/p/87715078
+3. https://github.com/ExistentialAudio/BlackHole
