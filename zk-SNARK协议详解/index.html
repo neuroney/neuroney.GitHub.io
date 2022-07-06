@@ -22,14 +22,14 @@
 
 
 
-<link rel="canonical" href="https://neuroney.github.io/Pinocchio%E8%AF%A6%E8%A7%A3/">
+<link rel="canonical" href="https://neuroney.github.io/zk-SNARK%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://neuroney.github.io/Pinocchio%E8%AF%A6%E8%A7%A3/","path":"Pinocchio详解/","title":"Pinocchio详解"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://neuroney.github.io/zk-SNARK%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/","path":"zk-SNARK协议详解/","title":"zk-SNARK协议详解"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Pinocchio详解 | Neptune</title>
+<title>zk-SNARK协议详解 | Neptune</title>
   
 
 
@@ -105,7 +105,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://neuroney.github.io/Pinocchio%E8%AF%A6%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="https://neuroney.github.io/zk-SNARK%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -118,12 +118,12 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Pinocchio详解 | Neptune">
+      <meta itemprop="name" content="zk-SNARK协议详解 | Neptune">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Pinocchio详解
+          zk-SNARK协议详解
         </h1>
 
         <div class="post-meta-container">
@@ -141,7 +141,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-07-06 16:27:12" itemprop="dateModified" datetime="2022-07-06T16:27:12+08:00">2022-07-06</time>
+      <time title="Modified: 2022-07-06 16:55:50" itemprop="dateModified" datetime="2022-07-06T16:55:50+08:00">2022-07-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -163,8 +163,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>本篇文章是学习 Pinocchio 时，所做的一些记录。</p>
-<p>Pinocchio 协议被认为是 zk-Snark 的第一个实用、可用的实现。</p>
+        <p>本篇文章是学习 zk-SNARK 协议时，所做的一些记录。</p>
 <span id="more"></span>
 <h2 id="zk-snark">zk-SNARK</h2>
 <p>Zero-Knowledge Succinct Non-interactive Argument of
@@ -172,12 +171,12 @@ Knowledge（zk-SNARK）是零知识证明系统的一个实用的密码学实现
 <ul>
 <li>Zero-knowledge：零知识性，除了所做的陈述（statement）的真实性外，不透露任何其他与陈述有关的信息。</li>
 <li>Succinct：简洁性，证明（proof）应当是简短的，易存储的，容易验证的。</li>
-<li>Non-interactive：非交互性，在构建和存储证明的过程中，不需要类似挑战/问答的轮询。即该证明可以和计算和公开验证。</li>
-<li>Argument of
-Knowledge：对所给陈述，可以制造一个拥有证据来验证此陈述的可信证明的能力。Argument
-在这个部分指的是完备性（Completeness），即为真的陈述有证明，为假的陈述没有证明。Knowledge
-指的是证明这在对陈述制造一个可信的证明时，必须“know a witness”，witness
-在密码学中指的是可以验证给定陈述为真的证据。</li>
+<li>Non-interactive：非交互性，在构建和存储证明的过程中，不需要类似挑战/问答的轮询。即该证明可以被计算和公开验证。</li>
+<li>Argument of Knowledge：Argument
+指的是对给定陈述，我们可以给出证明，该证明需要满足完备性（Completeness），即为真的陈述有证明，为假的陈述没有证明。Knowledge
+指的是证明这在对陈述制造一个可信的证明时，必须知道一个证据（witness），witness
+在密码学中指的是可以验证给定陈述为真的证据。那么，在这里，argument of
+knowledge 指的是一种可以对指定证据制造可信证明的能力</li>
 </ul>
 <p>注：在密码学专用名词中，argument 和 proof 是相对的概念，一般 argument
 指的是计算安全的（computationally
@@ -223,7 +222,7 @@ class="math inline">\(P(x)\)</span>
 的信息完全地公开了。我们不希望公开多项式的信息。考虑这样的场景，证明者声称自己知道一个次数为
 3，有两个根分别为 1 和 2 的多项式 <span
 class="math inline">\(P\)</span>。</p>
-<p>不妨令 <span
+<p>不妨 <span
 class="math inline">\(t(x)=(x-1)(x-2)\)</span>，即后文中的目标多项式（target
 polynomial）。由算数基本定保证，<span
 class="math inline">\(P(x)=H(x)\cdot
@@ -614,7 +613,7 @@ class="math inline">\(d\)</span></p></li>
 <li><p>计算 <span
 class="math inline">\(\{g^{s^i}\}_{i\in[d]},\{g^{v_i(s)},g^{w_i(s)},g^{
 y_i(s)}\}_{i\in[d]},\{g^{\alpha_v v_i(s)},g^{\alpha_w
-w_i(s)},g^{\alpha_y y_i(s)}\}_{i\in[0,d]}\)</span></p></li>
+w_i(s)},g^{\alpha_y y_i(s)}\}_{i\in[d]}\)</span></p></li>
 <li><p>计算 <span class="math inline">\(g^t=g^{t(s)}\)</span></p></li>
 <li><p>证明密钥：<span
 class="math inline">\((\{g^{s^i}\}_{i\in[d]},\{g^{v_i(s)},g^{w_i(s)},g^{
@@ -1010,7 +1009,11 @@ g_y^{Y_{mid}},g^{\beta \gamma}) = e(g^Z,g^{\gamma})\]</span></li>
 <p>注：<span class="math inline">\({v_0(x)},{w_0(x)},{y_0(x)}\)</span>
 是在对某些函数做转换时，一些常数多项式的约束条件无法用 QAP
 来表示而引入的，其值在转换的过程中会自然的计算出，而不需要另外的赋值。</p>
-<p>协议 9 即是 [Par+13] 所构造的 Pinocchio 协议。</p>
+<p>当协议 9 中的 <span
+class="math inline">\(\alpha\)</span>-偏移，使用的是同一个 <span
+class="math inline">\(\alpha\)</span> 时，即 <span
+class="math inline">\(\alpha=\alpha_v=\alpha_w=\alpha_y\)</span>，此时协议
+9 就是 [Par+13] 所构造的 Pinocchio 协议。</p>
 <h2 id="zero-knowledge">Zero Knowledge</h2>
 <p>接下来，考虑将零知识的性质添加到协议上，即可构成一个完整的 zk-SNARK
 协议。</p>
