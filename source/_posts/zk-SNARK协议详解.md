@@ -1,5 +1,5 @@
 ---
-title: zk-SNARK协议详解
+title: zk-SNARK 协议详解
 mathjax: true
 date: 2022-07-03 20:26:53
 categories: Cryptography
