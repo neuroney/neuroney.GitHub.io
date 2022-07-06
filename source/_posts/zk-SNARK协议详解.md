@@ -1,13 +1,11 @@
 ---
-title: Pinocchio详解
+title: zk-SNARK协议详解
 mathjax: true
 date: 2022-07-03 20:26:53
 categories: Cryptography
 ---
 
-本篇文章是学习 Pinocchio 时，所做的一些记录。
-
-Pinocchio 协议被认为是 zk-Snark 的第一个实用、可用的实现。
+本篇文章是学习 zk-SNARK 协议时，所做的一些记录。
 
 <!-- more -->
 
@@ -17,8 +15,8 @@ Zero-Knowledge Succinct Non-interactive Argument of Knowledge（zk-SNARK）是�
 
 - Zero-knowledge：零知识性，除了所做的陈述（statement）的真实性外，不透露任何其他与陈述有关的信息。
 - Succinct：简洁性，证明（proof）应当是简短的，易存储的，容易验证的。
-- Non-interactive：非交互性，在构建和存储证明的过程中，不需要类似挑战/问答的轮询。即该证明可以和计算和公开验证。
-- Argument of Knowledge：对所给陈述，可以制造一个拥有证据来验证此陈述的可信证明的能力。Argument 在这个部分指的是完备性（Completeness），即为真的陈述有证明，为假的陈述没有证明。Knowledge 指的是证明这在对陈述制造一个可信的证明时，必须“know a witness”，witness 在密码学中指的是可以验证给定陈述为真的证据。
+- Non-interactive：非交互性，在构建和存储证明的过程中，不需要类似挑战/问答的轮询。即该证明可以被计算和公开验证。
+- Argument of Knowledge：Argument 指的是对给定陈述，我们可以给出证明，该证明需要满足完备性（Completeness），即为真的陈述有证明，为假的陈述没有证明。Knowledge 指的是证明这在对陈述制造一个可信的证明时，必须知道一个证据（witness），witness 在密码学中指的是可以验证给定陈述为真的证据。那么，在这里，argument of knowledge 指的是一种可以对指定证据制造可信证明的能力
 
 注：在密码学专用名词中，argument 和 proof 是相对的概念，一般 argument 指的是计算安全的（computationally sound），即假定敌手的算力是多项式有限的；而 proof 则是统计安全的（statistical sound），在假定敌手是算力无限的情况下的安全。
 
@@ -39,7 +37,7 @@ Zero-Knowledge Succinct Non-interactive Argument of Knowledge（zk-SNARK）是�
 
 但在这个协议中，多项式 $P$ 的信息完全地公开了。我们不希望公开多项式的信息。考虑这样的场景，证明者声称自己知道一个次数为 3，有两个根分别为 1 和 2 的多项式 $P$。
 
-不妨令 $t(x)=(x-1)(x-2)$，即后文中的目标多项式（target polynomial）。由算数基本定保证，$P(x)=H(x)\cdot t(x)$，即这里必然存在这样的多项式 $H(x)$ 满足这个等式。也就是说，$P(x)$ 包含 $t(x)$，$P(x)$ 有 $t(x)$ 的全部零点。在不公开 $P(x)$，仅陈述 $t(x)$ 的条件下，一个很自然的证明方法就是找到 $H(x)=\frac{P(x)}{t(x)}$，其中除法没有余数，$H(x)$ 是一个整多项式。
+不妨 $t(x)=(x-1)(x-2)$，即后文中的目标多项式（target polynomial）。由算数基本定保证，$P(x)=H(x)\cdot t(x)$，即这里必然存在这样的多项式 $H(x)$ 满足这个等式。也就是说，$P(x)$ 包含 $t(x)$，$P(x)$ 有 $t(x)$ 的全部零点。在不公开 $P(x)$，仅陈述 $t(x)$ 的条件下，一个很自然的证明方法就是找到 $H(x)=\frac{P(x)}{t(x)}$，其中除法没有余数，$H(x)$ 是一个整多项式。
 
 那么我们可以更新协议 1 为协议 2:
 
@@ -221,7 +219,7 @@ $$(g^{s^i_B},g^{\alpha_B},g^{\alpha_B s^i_B})|_{i\in[d]}\quad \mathrm{where}\qua
     - 选取随机数 $s, \alpha_v,\alpha_w,\alpha_y$
     - 根据公布的函数 $F$，计算其 QAP 形式，包括一个目标多项式 $t(x)$ 和三个多项式集合 $\mathcal{V}=\{v_i(x)\},\mathcal{W}=w_i(x)\},\mathcal{Y}=\{y_i(x)\},i\in [m]$，其大小（size）为 $m$，次数为 $d$
 
-    - 计算 $\{g^{s^i}\}_{i\in[d]},\{g^{v_i(s)},g^{w_i(s)},g^{ y_i(s)}\}_{i\in[d]},\{g^{\alpha_v v_i(s)},g^{\alpha_w w_i(s)},g^{\alpha_y y_i(s)}\}_{i\in[0,d]}$
+    - 计算 $\{g^{s^i}\}_{i\in[d]},\{g^{v_i(s)},g^{w_i(s)},g^{ y_i(s)}\}_{i\in[d]},\{g^{\alpha_v v_i(s)},g^{\alpha_w w_i(s)},g^{\alpha_y y_i(s)}\}_{i\in[d]}$
     - 计算 $g^t=g^{t(s)}$
 
     - 证明密钥：$(\{g^{s^i}\}_{i\in[d]},\{g^{v_i(s)},g^{w_i(s)},g^{ y_i(s)},g^{\alpha_v v_i(s)},g^{\alpha_w w_i(s)},g^{\alpha_y y_i(s)}\}_{i\in[m]})$
@@ -378,7 +376,7 @@ $$(g^{s^i_B},g^{\alpha_B},g^{\alpha_B s^i_B})|_{i\in[d]}\quad \mathrm{where}\qua
 
 注：${v_0(x)},{w_0(x)},{y_0(x)}$ 是在对某些函数做转换时，一些常数多项式的约束条件无法用 QAP 来表示而引入的，其值在转换的过程中会自然的计算出，而不需要另外的赋值。
 
-协议 9 即是 [Par+13] 所构造的 Pinocchio 协议。
+当协议 9 中的 $\alpha$-偏移，使用的是同一个 $\alpha$ 时，即 $\alpha=\alpha_v=\alpha_w=\alpha_y$，此时协议 9 就是 [Par+13] 所构造的 Pinocchio 协议。
 
 ## Zero Knowledge
 
@@ -463,6 +461,3 @@ $$(V(s)+\delta_v t(s))\cdot (W(s)+\delta_w t(s))-(Y(s)+\delta_y t(s))=t(s)\cdot 
 3. https://drive.google.com/file/d/0B-WxC9ydKhlRZG92dnJ0RmdWRkZKUXR5Q3FTd0pZMl9Tdnln/view
 4. https://www.zeroknowledgeblog.com/index.php/the-pinocchio-protocol
 5. http://people.seas.harvard.edu/~salil/research/SZKargs-focs.pdf
-
-
-
